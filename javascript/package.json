@@ -1,0 +1,29 @@
+{
+  "name": "theatrical-players-refactoring-kata",
+  "jest": {
+    "verbose": true
+  },
+  "version": "1.0.0",
+  "description": "Example from first chapter of 'Refactoring' by Martin Fowler, 2nd Edition (https://www.thoughtworks.com/books/refactoring2)",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emilybache/Theatrical-Players-Refactoring-Kata.git"
+  },
+  "keywords": [
+    "kata",
+    "refactor"
+  ],
+  "license": "MIT",
+  "private": true,
+  "bugs": {
+    "url": "https://github.com/emilybache/Theatrical-Players-Refactoring-Kata/issues"
+  },
+  "homepage": "https://github.com/emilybache/Theatrical-Players-Refactoring-Kata",
+  "devDependencies": {
+    "babel": "^5.8.23",
+    "jest": "^24.8.0"
+  }
+}
