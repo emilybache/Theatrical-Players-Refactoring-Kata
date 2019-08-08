@@ -1,0 +1,21 @@
+apply plugin: 'java'
+
+group 'kata'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 12
+
+repositories {
+    mavenCentral()
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+dependencies {
+    testCompile 'org.junit.jupiter:junit-jupiter:5.5.1'
+    testCompile 'org.assertj:assertj-core:3.13.2'
+}
