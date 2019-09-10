@@ -1,17 +1,12 @@
-import org.junit.jupiter.api.Assertions.assertEquals
+
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
+import org.approvaltests.Approvals.verify
 
 class StatementPrinterTests {
 
     @Test
     internal fun exampleStatement() {
-        val expected = "Statement for BigCo\n" +
-                "  Hamlet: \$650.00 (55 seats)\n" +
-                "  As You Like It: \$580.00 (35 seats)\n" +
-                "  Othello: \$500.00 (40 seats)\n" +
-                "Amount owed is \$1,730.00\n" +
-                "You earned 47 credits\n"
 
         val plays = mapOf(
             "hamlet" to Play("Hamlet", "tragedy"),
@@ -30,7 +25,7 @@ class StatementPrinterTests {
         val statementPrinter = StatementPrinter()
         val result = statementPrinter.print(invoice, plays)
 
-        assertEquals(expected, result)
+        verify(result)
     }
 
     @Test
