@@ -52,5 +52,3 @@ class StatementPrinter {
 enum UnknownTypeError: Error {
     case unknownTypeError(String)
 }
-
-// TODO: get test to pass and coverage, destructure performance object in for loop
