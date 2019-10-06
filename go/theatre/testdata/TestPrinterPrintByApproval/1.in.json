@@ -1,0 +1,15 @@
+{
+  "plays": [
+    { "id": "hamlet", "play": { "name": "Hamlet", "type": "tragedy" } },
+    { "id": "as-like", "play": { "name": "As You Like It", "type": "comedy" } },
+    { "id": "othello", "play": { "name": "Othello", "type": "tragedy" } }
+    ],
+  "invoice": {
+    "customer": "BigCo",
+    "performances": [
+      {"playId": "hamlet", "audience": 55 },
+      {"playId": "as-like", "audience": 35 },
+      {"playId": "othello", "audience": 40 }
+    ]
+  }
+}
