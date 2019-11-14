@@ -2,7 +2,7 @@ apply plugin: 'java'
 
 group 'kata'
 version '1.0-SNAPSHOT'
-sourceCompatibility = 11
+sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
@@ -16,6 +16,6 @@ test {
 }
 
 dependencies {
-    testCompile 'org.junit.jupiter:junit-jupiter:5.5.1'
-    testCompile 'com.approvaltests:approvaltests:3.2.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.5.2'
+    testImplementation 'com.approvaltests:approvaltests:4.0.2'
 }
