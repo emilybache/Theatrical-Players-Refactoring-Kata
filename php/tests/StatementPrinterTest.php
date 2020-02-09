@@ -10,17 +10,6 @@ use Theatrical\Invoice;
 
 final class StatementPrinterTest extends TestCase
 {
-    public function testListOfPlayIsCorrect() : void 
-    {
-        $plays = [
-            "hamlet" => new Play("Hamlet", "tragedy"),
-            "as-like" => new Play("As You Like It", "comedy"),
-            "othello" => new Play("Othello", "tragedy")
-        ];
-
-        Approvals::approveList($plays);    
-    }
-
     public function testCanPrintInvoice() : void 
     {
         $plays = [
