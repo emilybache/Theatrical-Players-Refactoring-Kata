@@ -11,7 +11,9 @@
             "email": "sam@cranford.fr"
         }
     ],
-    "require": {},
+    "require": {
+      "php": "^7.4"
+    },
     "autoload": {
         "psr-4": {
             "Theatrical\\": "src/"
