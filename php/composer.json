@@ -1,0 +1,22 @@
+{
+    "name": "sam/theatrical",
+    "type": "project",
+    "require-dev": {
+        "phpunit/phpunit": "^9",
+        "approvals/approval-tests": "^1.4"
+    },
+    "authors": [
+        {
+            "name": "Sam Cranford",
+            "email": "sam@cranford.fr"
+        }
+    ],
+    "require": {
+      "php": "^7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Theatrical\\": "src/"
+        }
+}
+}
