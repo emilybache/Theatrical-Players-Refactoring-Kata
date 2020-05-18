@@ -1,13 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Theatrical;
 
-class Performance 
+class Performance
 {
-    public string $play_id;
-    public int $audience;
+    /**
+     * @var string
+     */
+    public $play_id;
 
-    public function __construct($play_id, $audience)
+    /**
+     * @var int
+     */
+    public $audience;
+
+    /**
+     * @var Play
+     */
+    public $play;
+
+    public function __construct(string $play_id, int $audience)
     {
         $this->play_id = $play_id;
         $this->audience = $audience;

@@ -1,16 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Theatrical;
 
 class Invoice
 {
-    public string $customer;
-    public array $performances;
+    /**
+     * @var string
+     */
+    public $customer;
 
-    public function __construct($customer, $performances)
+    /**
+     * @var array
+     */
+    public $performances;
+
+    public function __construct(string $customer, array $performances)
     {
         $this->customer = $customer;
         $this->performances = $performances;
     }
-    
 }
