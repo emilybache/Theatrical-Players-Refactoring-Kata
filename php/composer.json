@@ -2,8 +2,12 @@
     "name": "sam/theatrical",
     "type": "project",
     "require-dev": {
-        "phpunit/phpunit": "^9",
-        "approvals/approval-tests": "^1.4"
+        "phpunit/phpunit": "^8.5",
+        "approvals/approval-tests": "^1.4",
+        "phpstan/phpstan": "^0.12.25",
+        "phpstan/phpstan-phpunit": "^0.12.8",
+        "symplify/easy-coding-standard": "^7.3",
+        "symplify/phpstan-extensions": "^7.3"
     },
     "authors": [
         {
@@ -12,11 +16,27 @@
         }
     ],
     "require": {
-      "php": "^7.4"
+        "php": "^7.2",
+        "ext-intl": "*"
     },
     "autoload": {
         "psr-4": {
             "Theatrical\\": "src/"
         }
-}
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "checkcode": "phpcs src tests --standard=PSR12",
+        "fixcode": "phpcbf src tests --standard=PSR12",
+        "test": "phpunit",
+        "tests": "phpunit",
+        "test-coverage": "phpunit --coverage-html build/coverage",
+        "check-cs": "ecs check src tests --ansi",
+        "fix-cs": "ecs check src tests --fix --ansi",
+        "phpstan": "phpstan analyse --ansi"
+    }
 }
