@@ -3,7 +3,7 @@
   "jest": {
     "verbose": true
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Example from first chapter of 'Refactoring' by Martin Fowler, 2nd Edition (https://www.thoughtworks.com/books/refactoring2)",
   "scripts": {
     "test": "jest"
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/emilybache/Theatrical-Players-Refactoring-Kata",
   "devDependencies": {
-    "babel": "^5.8.23",
-    "jest": "^24.8.0"
+    "babel-cli": "^6.26.0",
+    "jest": "^26.6.3"
   }
 }
