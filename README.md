@@ -2,6 +2,7 @@ Theatrical Players Refactoring Kata
 ====================================
 
 The first chapter of ['Refactoring' by Martin Fowler, 2nd Edition](https://www.thoughtworks.com/books/refactoring2) contains a worked example of this exercise, in javascript. That chapter is available to download for free. This repo contains the starting point for this exercise in several languages, with tests, so you can try it out for yourself.
+This repo was forked from https://github.com/emilybache/Theatrical-Players-Refactoring-Kata
 
 What you need to change
 -----------------------
@@ -13,4 +14,5 @@ In his book Fowler mentions that the first step in refactoring is always the sam
 
 Acknowledgements
 ----------------
-Thankyou to Martin Fowler for kindly giving permission to use his code.
+Thank you to Martin Fowler for kindly giving permission to use his code.
+Thank you to Emily Bache for creation of this kata.
