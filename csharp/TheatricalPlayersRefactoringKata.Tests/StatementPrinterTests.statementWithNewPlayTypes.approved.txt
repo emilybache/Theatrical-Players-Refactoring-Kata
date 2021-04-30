@@ -1,0 +1,5 @@
+﻿Statement for BigCo
+  Henry V: $100.00 (53 seats)
+  As You Like It: $100.00 (55 seats)
+Amount owed is $200.00
+You earned 48 credits
