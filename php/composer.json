@@ -1,13 +1,18 @@
 {
     "name": "sam/theatrical",
+    "description": "Theatrical Players Refactoring Kata - PHP version",
+    "require": {
+        "php": "^7.3 || ^8.0",
+        "ext-intl": "*"
+    },
     "type": "project",
     "require-dev": {
-        "phpunit/phpunit": "^8.5",
-        "approvals/approval-tests": "^1.4",
-        "phpstan/phpstan": "^0.12.25",
-        "phpstan/phpstan-phpunit": "^0.12.8",
-        "symplify/easy-coding-standard": "^7.3",
-        "symplify/phpstan-extensions": "^7.3"
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^0.12.85",
+        "phpstan/phpstan-phpunit": "^0.12.18",
+        "symplify/easy-coding-standard": "^9.3",
+        "symplify/phpstan-extensions": "^9.3",
+        "approvals/approval-tests": "^1.4"
     },
     "authors": [
         {
@@ -15,10 +20,6 @@
             "email": "sam@cranford.fr"
         }
     ],
-    "require": {
-        "php": "^7.2",
-        "ext-intl": "*"
-    },
     "autoload": {
         "psr-4": {
             "Theatrical\\": "src/"
@@ -35,8 +36,8 @@
         "test": "phpunit",
         "tests": "phpunit",
         "test-coverage": "phpunit --coverage-html build/coverage",
-        "check-cs": "ecs check src tests --ansi",
-        "fix-cs": "ecs check src tests --fix --ansi",
+        "check-cs": "ecs check",
+        "fix-cs": "ecs check --fix",
         "phpstan": "phpstan analyse --ansi"
     }
 }
