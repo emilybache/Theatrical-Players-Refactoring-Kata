@@ -13,10 +13,10 @@ class StatementPrinter {
         val frmt = NumberFormat.getCurrencyInstance(Locale.US)
 
         invoice.performances.forEach { performance ->
-            val play = plays[performance.playID]
+            val play = plays.getValue(performance.playID)
             var thisAmount = 0
 
-            when (play?.type) {
+            when (play.type) {
                 "tragedy" -> {
                     thisAmount = 40000
                     if (performance.audience > 30) {
