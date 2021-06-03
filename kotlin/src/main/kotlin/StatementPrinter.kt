@@ -12,34 +12,34 @@ class StatementPrinter {
 
         val frmt = NumberFormat.getCurrencyInstance(Locale.US)
 
-        for ((playID, audience) in invoice.performances) {
-            val play = plays[playID]
+        invoice.performances.forEach { performance ->
+            val play = plays[performance.playID]
             var thisAmount = 0
 
             when (play?.type) {
                 "tragedy" -> {
                     thisAmount = 40000
-                    if (audience > 30) {
-                        thisAmount += 1000 * (audience - 30)
+                    if (performance.audience > 30) {
+                        thisAmount += 1000 * (performance.audience - 30)
                     }
                 }
                 "comedy" -> {
                     thisAmount = 30000
-                    if (audience > 20) {
-                        thisAmount += 10000 + 500 * (audience - 20)
+                    if (performance.audience > 20) {
+                        thisAmount += 10000 + 500 * (performance.audience - 20)
                     }
-                    thisAmount += 300 * audience
+                    thisAmount += 300 * performance.audience
                 }
                 else -> throw Error("unknown type: {play.type}")
             }
 
             // add volume credits
-            volumeCredits += max(audience - 30, 0)
+            volumeCredits += max(performance.audience - 30, 0)
             // add extra credit for every ten comedy attendees
-            if ("comedy" == play.type) volumeCredits += floor((audience / 5).toDouble()).toInt()
+            if ("comedy" == play.type) volumeCredits += floor((performance.audience / 5).toDouble()).toInt()
 
             // print line for this order
-            result += "  ${play.name}: ${frmt.format((thisAmount / 100).toLong())} ($audience seats)\n"
+            result += "  ${play.name}: ${frmt.format((thisAmount / 100).toLong())} (${performance.audience} seats)\n"
 
             totalAmount += thisAmount
         }
