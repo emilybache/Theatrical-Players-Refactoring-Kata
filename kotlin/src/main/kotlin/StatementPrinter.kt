@@ -12,34 +12,34 @@ class StatementPrinter {
 
         val frmt = NumberFormat.getCurrencyInstance(Locale.US)
 
-        invoice.performances.forEach { performance ->
-            val play = plays.getValue(performance.playID)
+        invoice.performances.forEach { perf ->
+            val play = plays.getValue(perf.playID)
             var thisAmount = 0
 
             when (play.type) {
                 "tragedy" -> {
                     thisAmount = 40000
-                    if (performance.audience > 30) {
-                        thisAmount += 1000 * (performance.audience - 30)
+                    if (perf.audience > 30) {
+                        thisAmount += 1000 * (perf.audience - 30)
                     }
                 }
                 "comedy" -> {
                     thisAmount = 30000
-                    if (performance.audience > 20) {
-                        thisAmount += 10000 + 500 * (performance.audience - 20)
+                    if (perf.audience > 20) {
+                        thisAmount += 10000 + 500 * (perf.audience - 20)
                     }
-                    thisAmount += 300 * performance.audience
+                    thisAmount += 300 * perf.audience
                 }
                 else -> throw Error("unknown type: {play.type}")
             }
 
             // add volume credits
-            volumeCredits += max(performance.audience - 30, 0)
+            volumeCredits += max(perf.audience - 30, 0)
             // add extra credit for every ten comedy attendees
-            if ("comedy" == play.type) volumeCredits += floor((performance.audience / 5).toDouble()).toInt()
+            if ("comedy" == play.type) volumeCredits += floor((perf.audience / 5).toDouble()).toInt()
 
             // print line for this order
-            result += "  ${play.name}: ${frmt.format((thisAmount / 100).toLong())} (${performance.audience} seats)\n"
+            result += "  ${play.name}: ${frmt.format((thisAmount / 100).toLong())} (${perf.audience} seats)\n"
 
             totalAmount += thisAmount
         }
