@@ -10,7 +10,7 @@ class StatementPrinter {
         var volumeCredits = 0
         var result = "Statement for ${invoice.customer}\n"
 
-        val frmt = NumberFormat.getCurrencyInstance(Locale.US)
+        val format = { number: Long ->  NumberFormat.getCurrencyInstance(Locale.US).format(number)}
 
         invoice.performances.forEach { perf ->
             val play = plays.getValue(perf.playID)
@@ -39,11 +39,11 @@ class StatementPrinter {
             if ("comedy" == play.type) volumeCredits += floor((perf.audience / 5).toDouble()).toInt()
 
             // print line for this order
-            result += "  ${play.name}: ${frmt.format((thisAmount / 100).toLong())} (${perf.audience} seats)\n"
+            result += "  ${play.name}: ${format((thisAmount / 100).toLong())} (${perf.audience} seats)\n"
 
             totalAmount += thisAmount
         }
-        result += "Amount owed is ${frmt.format((totalAmount / 100).toLong())}\n"
+        result += "Amount owed is ${format((totalAmount / 100).toLong())}\n"
         result += "You earned $volumeCredits credits\n"
         return result
     }
