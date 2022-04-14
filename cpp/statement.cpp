@@ -37,10 +37,10 @@ std::string statement(
     result.precision(2);
     result << "Statement for " << invoice["customer"].get<std::string>() << '\n';
 
-    for( const auto& perf : invoice["performances"])
+    for( const nlohmann::json& perf : invoice["performances"])
     {
         float this_amount = 0;
-        auto play = plays[perf["playID"].get<std::string>()];
+        const nlohmann::json& play = plays[perf["playID"].get<std::string>()];
         if (play["type"] == "tragedy")
         {
             this_amount = 40000;
