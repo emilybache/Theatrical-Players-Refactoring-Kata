@@ -19,22 +19,6 @@ class comma_numpunct : public std::numpunct<char>
     }
 };
 
-std::string format_as_dollars(float amount)
-{
-    // this creates a new locale based on the current application default
-    // (which is either the one given on startup, but can be overriden with
-    // std::locale::global) - then extends it with an extra facet that 
-    // controls numeric output.
-    const std::locale comma_locale(std::locale(), new comma_numpunct());
-
-    std::ostringstream out;
-    // tell stream to use our new locale.
-    out.imbue(comma_locale);
-    out.precision(2);
-    out << "$" << std::fixed << amount;
-    return out.str();
-}
-
 std::string statement(
     const nlohmann::json& invoice,
     const nlohmann::json& plays)
@@ -42,7 +26,15 @@ std::string statement(
     float total_amount = 0;
     int volume_credits = 0;
 
+    // this creates a new locale based on the current application default
+    // (which is either the one given on startup, but can be overriden with
+    // std::locale::global) - then extends it with an extra facet that
+    // controls numeric output.
+    const std::locale comma_locale(std::locale(), new comma_numpunct());
+
     std::stringstream result;
+    result.imbue(comma_locale);
+    result.precision(2);
     result << "Statement for " << invoice["customer"].get<std::string>() << '\n';
 
     for( const auto& perf : invoice["performances"])
@@ -84,12 +76,12 @@ std::string statement(
         }
 
         // print line for this order
-        result << " " << play["name"].get<std::string>() << ": " << format_as_dollars(this_amount/100) << 
+        result << " " << play["name"].get<std::string>() << ": " << "$" << std::fixed << (this_amount/100) <<
             " (" << perf["audience"] << " seats)\n";
         total_amount += this_amount;
     }
 
-    result << "Amount owed is " << format_as_dollars(total_amount/100.0f) << "\n";
+    result << "Amount owed is " << "$" << std::fixed << (total_amount/100.0f) << "\n";
     result << "You earned " << volume_credits << " credits";
     return result.str();
 }
