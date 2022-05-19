@@ -22,6 +22,9 @@ function evaluatePlays(plays, performances) {
 
     let thisAmount = 0;
 
+    // add volume credits
+    volumeCredits += Math.max(audience - 30, 0);
+
     switch (playType) {
       case "tragedy":
         thisAmount = 40000;
@@ -35,18 +38,19 @@ function evaluatePlays(plays, performances) {
           thisAmount += 10000 + 500 * (audience - 20);
         }
         thisAmount += 300 * audience;
+
+        // add extra credit for every ten comedy attendees
+        volumeCredits += Math.floor(audience / 5);
         break;
       default:
         throw new Error(`unknown type: ${playType}`);
     }
-    // add volume credits
-    volumeCredits += Math.max(audience - 30, 0);
-    // add extra credit for every ten comedy attendees
-    if ("comedy" === playType) volumeCredits += Math.floor(audience / 5);
+
     // print line for this order
     result += ` ${playName}: ${formatCurrency(
       thisAmount / 100
     )} (${audience} seats)\n`;
+
     totalAmount += thisAmount;
   }
 
