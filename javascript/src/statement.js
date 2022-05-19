@@ -2,13 +2,21 @@ function statement(invoice, plays) {
   const customer = invoice.customer;
   const performances = invoice.performances;
 
+  let statement = `Statement for ${customer}\n`;
+
+  statement += evaluatePlays(plays, performances);
+
+  return statement;
+}
+
+function evaluatePlays(plays, performances) {
   let totalAmount = 0;
   let volumeCredits = 0;
-  let result = `Statement for ${customer}\n`;
+  let result = ``;
 
-  for (let perf of performances) {
-    const audience = perf.audience;
-    const play = plays[perf.playID];
+  for (let p of performances) {
+    const audience = p.audience;
+    const play = plays[p.playID];
     const playType = play.type;
     const playName = play.name;
 
@@ -44,6 +52,7 @@ function statement(invoice, plays) {
 
   result += `Amount owed is ${formatCurrency(totalAmount / 100)}\n`;
   result += `You earned ${volumeCredits} credits\n`;
+
   return result;
 }
 
