@@ -1,16 +1,47 @@
+import copy
 import math
 
 
+# Public
 def statement(invoice, plays):
-    # Inner helper functions
+    statement_data = _create_statement_data(invoice,plays)
+    return _get_statement(statement_data)
+
+
+# Implementation
+def _get_statement(data: object) -> object:
+    # Inner helper function
     def format_as_dollars(amount):
         return f"${amount:0,.2f}"
+
+    # Code to create statement text
+    result = f'Statement for {data["customer"]}\n'
+
+    for perf in data['performances']:
+        # print line for this order
+        result += f' {perf["play"]["name"]}: {format_as_dollars(perf["amount"] / 100)} ({perf["audience"]} seats)\n'
+
+    result += f'Amount owed is {format_as_dollars(data["totalAmount"] / 100)}\n'
+    result += f'You earned {data["totalVolumeCredits"]} credits\n'
+    return result
+
+
+def _create_statement_data(invoice, plays):
+    # Inner helper functions
+    def map_performance(perf):
+        # creating a copy of perf without copying reference, result = perf creates a deep copy
+        result = copy.copy(perf)
+        result['play'] = get_play_for(result)
+        result['amount'] = get_amount_for(result)
+        result['volumeCredits'] = get_volume_credits_for(result)
+        return result
 
     def get_play_for(performance):
         return plays[performance['playID']]
 
     def get_amount_for(performance):
-        play_type = get_play_for(performance)['type']
+        print(performance)
+        play_type = performance['play']['type']
         if play_type == "tragedy":
             amount = 40000
             if performance['audience'] > 30:
@@ -31,32 +62,28 @@ def statement(invoice, plays):
         vol_credits = 0
         vol_credits += max(performance['audience'] - 30, 0)
         # add extra credit for every ten comedy attendees
-        if "comedy" == get_play_for(performance)["type"]:
+        if "comedy" == performance['play']["type"]:
             vol_credits += math.floor(performance['audience'] / 5)
 
         return vol_credits
 
-    def get_total_amount():
+    def get_total_amount(data):
         total_amount = 0
-        for performance in invoice['performances']:
-            total_amount += get_amount_for(performance)
+        for performance in data['performances']:
+            total_amount += performance['amount']
 
         return total_amount
 
-    def get_total_volume_credits():
+    def get_total_volume_credits(data):
         total_volume_credits = 0
-        for performance in invoice['performances']:
-            total_volume_credits += get_volume_credits_for(performance)
+        for performance in data['performances']:
+            total_volume_credits += performance['volumeCredits']
 
         return total_volume_credits
 
-    # main statement function code
-    result = f'Statement for {invoice["customer"]}\n'
+    statement_data = {'customer': invoice['customer'],
+                      'performances': list(map(map_performance, invoice['performances']))}
+    statement_data['totalAmount'] = get_total_amount(statement_data)
+    statement_data['totalVolumeCredits'] = get_total_volume_credits(statement_data)
 
-    for perf in invoice['performances']:
-        # print line for this order
-        result += f' {get_play_for(perf)["name"]}: {format_as_dollars(get_amount_for(perf) / 100)} ({perf["audience"]} seats)\n'
-
-    result += f'Amount owed is {format_as_dollars(get_total_amount() / 100)}\n'
-    result += f'You earned {get_total_volume_credits()} credits\n'
-    return result
+    return statement_data
