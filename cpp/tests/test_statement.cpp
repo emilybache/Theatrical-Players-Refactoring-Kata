@@ -1,7 +1,7 @@
 #include "statement.h"
 
 #include "json.hpp"
-#include "doctest.h"
+#include "doctest/doctest.h"
 #include "ApprovalTests.hpp"
 
 #include <iostream>
@@ -10,7 +10,7 @@ namespace
 {
     std::string get_adjacent_file(const std::string& filename)
     {
-        return ApprovalTestNamer().getDirectory() + filename;
+        return ApprovalTests::ApprovalTestNamer().getDirectory() + filename;
     }
 
     nlohmann::json read_json_file(const std::string& filename)
@@ -32,7 +32,7 @@ TEST_CASE("test_example_statement")
     auto invoice = read_json_file(get_adjacent_file("invoice.json"));
     auto plays = read_json_file(get_adjacent_file("plays.json"));
 
-    Approvals::verify(statement(invoice, plays));
+    ApprovalTests::Approvals::verify(statement(invoice, plays));
 }
 
 TEST_CASE("test_statement_with_new_play_types")
