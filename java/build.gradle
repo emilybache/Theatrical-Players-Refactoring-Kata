@@ -1,4 +1,7 @@
-apply plugin: 'java'
+plugins {
+    id 'java'
+    id 'info.solidsoft.pitest' version '1.9.0'
+}
 
 group 'kata'
 version '1.0-SNAPSHOT'
@@ -19,4 +22,9 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
     testImplementation 'com.approvaltests:approvaltests:15.6.0'
     testImplementation 'org.assertj:assertj-core:3.19.0'
+}
+
+pitest {
+    targetClasses = ['theatricalplays.*']
+    junit5PluginVersion = '1.0.0'
 }
