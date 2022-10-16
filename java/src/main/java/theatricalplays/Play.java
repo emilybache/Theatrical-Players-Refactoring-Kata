@@ -1,3 +1,5 @@
+package theatricalplays;
+
 public class Play {
 
     public String name;
