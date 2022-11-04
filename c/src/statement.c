@@ -65,7 +65,7 @@ void statement(char* result, struct Invoice *invoice, int numberOfPerformances,
     }
 
     sprintf(result, "Amount owed is $%.2f\n", (total_amount/100));
-    sprintf(result, "You earned %d\n", volume_credits);
+    sprintf(result, "You earned %d credits", volume_credits);
 }
 
 struct Invoice *Invoice_create(char* customer, struct Performance** performances) {
