@@ -11,4 +11,3 @@ enable_testing()
 add_subdirectory(src)
 add_subdirectory(test-catch2)
 add_subdirectory(test-gtest)
-

@@ -1,10 +1,12 @@
 #include <gtest/gtest.h>
 #include "ApprovalTests.hpp"
+#include <string>
 
 extern "C"
 {
 #include "statement.h"
 }
+#define MAX_PRINT_LENGTH 20000
 
 using namespace std;
 
@@ -20,9 +22,10 @@ TEST(StatementTest, ExistingPlayTypes) {
     Performance* performances[] = {bigCoHamlet, bigCoAsLike, bigCoOthello};
     struct Invoice* invoice = Invoice_create("BigCo", performances);
 
-    char* result = statement(invoice, plays);
+    char result[MAX_PRINT_LENGTH];
+    statement(result, invoice, 3, plays, 3);
 
-    ApprovalTests::Approvals::verify(result);
+    ApprovalTests::Approvals::verify(string(result));
 }
 
 TEST(StatementTest, NewPlayTypes) {
@@ -36,7 +39,8 @@ TEST(StatementTest, NewPlayTypes) {
     Performance* performances[] = {bigCoIIAsLike, bigCoIIHenryV};
     struct Invoice* invoice = Invoice_create("BigCoII", performances);
 
-    char* result = statement(invoice, plays);
+    char result[MAX_PRINT_LENGTH];
+    statement(result, invoice, 2, plays, 2);
 
-    ApprovalTests::Approvals::verify(result);
+    ApprovalTests::Approvals::verify(string(result));
 }

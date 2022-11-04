@@ -3,15 +3,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include <opencl-c.h>
 
-char *statement(struct Invoice *invoice, int numberOfPerformances,
+#define the_max(x,y) (((x) >= (y)) ? (x) : (y))
+
+void statement(char* result, struct Invoice *invoice, int numberOfPerformances,
         struct Play **plays, int numberOfPlays) {
     float total_amount = 0;
     int volume_credits = 0;
     float this_amount = 0;
     struct Play* play;
-    char* result;
 
     sprintf(result, "Statement for %s\n", invoice->customer);
 
@@ -47,11 +47,11 @@ char *statement(struct Invoice *invoice, int numberOfPerformances,
         else
         {
             printf("ERROR: unknown play type %s", play->type);
-            return "ERROR";
+            return;
         }
 
         // add volume credits
-        volume_credits += max(invoice->performances[i]->audience - 30, 0);
+        volume_credits += the_max(invoice->performances[i]->audience - 30, 0);
 
         // add extra credit for every ten comedy attendees
         if (strcmp(play->type, "comedy") == 0)
@@ -60,13 +60,12 @@ char *statement(struct Invoice *invoice, int numberOfPerformances,
         }
 
         // print line for this order
-        sprintf(result, " %s: $%f (%d seats)\n", play->name, (this_amount/100), invoice->performances[i]->audience);
+        sprintf(result, " %s: $%.2f (%d seats)\n", play->name, (this_amount/100), invoice->performances[i]->audience);
         total_amount += this_amount;
     }
 
-    sprintf(result, "Amount owed is $%f\n", (total_amount/100.0f));
-    sprintf(result, "You earned $%d\n", volume_credits);
-    return result;
+    sprintf(result, "Amount owed is $%.2f\n", (total_amount/100));
+    sprintf(result, "You earned %d\n", volume_credits);
 }
 
 struct Invoice *Invoice_create(char* customer, struct Performance** performances) {

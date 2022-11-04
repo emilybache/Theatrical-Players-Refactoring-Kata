@@ -1,16 +1,19 @@
 #include "ApprovalTests.hpp"
 #include "catch2/catch.hpp"
+#include <string>
 
 extern "C"
 {
 #include "statement.h"
 }
 
+#define MAX_PRINT_LENGTH 20000
 
 TEST_CASE ("Theatrical Players") {
     struct Play* hamlet = Play_create("hamlet", "Hamlet", "tragedy");
     struct Play* aslike = Play_create("as-like", "As You Like It", "comedy");
     struct Play* othello = Play_create("othello", "Othello", "tragedy");
+    char result[MAX_PRINT_LENGTH];
 
     SECTION("existing play types") {
         struct Performance* bigCoHamlet = Performance_create("hamlet", 55);
@@ -21,9 +24,9 @@ TEST_CASE ("Theatrical Players") {
         struct Invoice* invoice = Invoice_create("BigCo", performances);
         Play* plays[] = { hamlet, aslike, othello };
 
-        char* result = statement(invoice, 3, plays, 3);
+        statement(result, invoice, 3, plays, 3);
 
-        ApprovalTests::Approvals::verify(result);
+        ApprovalTests::Approvals::verify(std::string(result));
     }
     SECTION("new play types") {
         struct Play* henryv = Play_create("henry-v", "Henry V", "history");
@@ -34,9 +37,9 @@ TEST_CASE ("Theatrical Players") {
         Performance* performances[] = {bigCoIIAsLike, bigCoIIHenryV};
         struct Invoice* invoice = Invoice_create("BigCoII", performances);
 
-        char* result = statement(invoice, 2, plays, 2);
+        statement(result, invoice, 2, plays, 2);
 
-        ApprovalTests::Approvals::verify(result);
+        ApprovalTests::Approvals::verify(std::string(result));
     }
 }
 
