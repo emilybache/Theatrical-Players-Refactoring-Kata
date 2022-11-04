@@ -21,7 +21,7 @@ TEST_CASE ("Theatrical Players") {
         struct Invoice* invoice = Invoice_create("BigCo", performances);
         Play* plays[] = { hamlet, aslike, othello };
 
-        char* result = statement(invoice, plays);
+        char* result = statement(invoice, 3, plays, 3);
 
         ApprovalTests::Approvals::verify(result);
     }
@@ -34,7 +34,7 @@ TEST_CASE ("Theatrical Players") {
         Performance* performances[] = {bigCoIIAsLike, bigCoIIHenryV};
         struct Invoice* invoice = Invoice_create("BigCoII", performances);
 
-        char* result = statement(invoice, plays);
+        char* result = statement(invoice, 2, plays, 2);
 
         ApprovalTests::Approvals::verify(result);
     }
