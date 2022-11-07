@@ -46,7 +46,7 @@ void statement(char* result, struct Invoice *invoice, int numberOfPerformances,
 
         else
         {
-            printf("ERROR: unknown play type %s", play->type);
+            sprintf(result, "ERROR: unknown play type %s", play->type);
             return;
         }
 
@@ -60,12 +60,12 @@ void statement(char* result, struct Invoice *invoice, int numberOfPerformances,
         }
 
         // print line for this order
-        sprintf(result, " %s: $%.2f (%d seats)\n", play->name, (this_amount/100), invoice->performances[i]->audience);
+        sprintf(result, "%s %s: $%.2f (%d seats)\n", result, play->name, (this_amount/100), invoice->performances[i]->audience);
         total_amount += this_amount;
     }
 
-    sprintf(result, "Amount owed is $%.2f\n", (total_amount/100));
-    sprintf(result, "You earned %d credits", volume_credits);
+    sprintf(result, "%sAmount owed is $%.2f\n", result, (total_amount/100));
+    sprintf(result, "%sYou earned %d credits", result, volume_credits);
 }
 
 struct Invoice *Invoice_create(char* customer, struct Performance** performances) {

@@ -2,3 +2,4 @@
 /subprojects/Catch2-*/
 /subprojects/packagecache/
 /cmake-build-*/
+*.received.*
