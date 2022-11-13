@@ -104,7 +104,6 @@ void commafy(char *buffer, double n) {
 
 char *format_currency_number(double number) {
     static char buffer[200];
-    buffer[0] = '\0';
     commafy(buffer, number);
 
     return buffer;
