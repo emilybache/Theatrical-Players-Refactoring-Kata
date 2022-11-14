@@ -26,4 +26,6 @@ struct Invoice* Invoice_create(char* customer, struct Performance** performances
 
 void statement(char* result, struct Invoice* invoice, int numberOfPerformances, struct Play **plays, int numberOfPlays);
 
+char* format_currency_number(double number);
+
 #endif //THEATRICALPLAYERS_STATEMENT_H
