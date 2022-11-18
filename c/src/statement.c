@@ -6,8 +6,8 @@
 
 #define the_max(x, y) (((x) >= (y)) ? (x) : (y))
 
-void statement(char *result, struct Invoice *invoice, int numberOfPerformances,
-               struct Play **plays, int numberOfPlays) {
+int statement(char *result, struct Invoice *invoice, int numberOfPerformances,
+              struct Play **plays, int numberOfPlays) {
     float total_amount = 0;
     int volume_credits = 0;
     float this_amount = 0;
@@ -37,7 +37,7 @@ void statement(char *result, struct Invoice *invoice, int numberOfPerformances,
         } else {
             sprintf(result, "ERROR: unknown play type %s\n", play->type);
             printf("ERROR: unknown play type %s", play->type);
-            return;
+            return -1;
         }
 
         // add volume credits
@@ -58,6 +58,7 @@ void statement(char *result, struct Invoice *invoice, int numberOfPerformances,
     sprintf(result, "%sAmount owed is $%s\n", result,
             format_currency_number(total_amount / 100));
     sprintf(result, "%sYou earned %d credits", result, volume_credits);
+    return 0;
 }
 
 struct Invoice *Invoice_create(char *customer, struct Performance **performances) {

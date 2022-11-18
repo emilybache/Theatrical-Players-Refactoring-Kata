@@ -24,8 +24,9 @@ TEST_CASE ("Theatrical Players") {
         struct Invoice *invoice = Invoice_create("BigCo", performances);
         Play *plays[] = {hamlet, aslike, othello};
 
-        statement(result, invoice, 3, plays, 3);
+        int status = statement(result, invoice, 3, plays, 3);
 
+        REQUIRE(status == 0);
         ApprovalTests::Approvals::verify(std::string(result));
     }
 
@@ -38,8 +39,9 @@ TEST_CASE ("Theatrical Players") {
         Performance *performances[] = {bigCoIIAsLike, bigCoIIHenryV};
         struct Invoice *invoice = Invoice_create("BigCoII", performances);
 
-        statement(result, invoice, 2, plays, 2);
+        int status = statement(result, invoice, 2, plays, 2);
 
+        REQUIRE(status == -1);
         ApprovalTests::Approvals::verify(std::string(result));
     }
 }

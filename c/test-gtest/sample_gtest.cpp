@@ -23,8 +23,9 @@ TEST(StatementTest, ExistingPlayTypes) {
     struct Invoice* invoice = Invoice_create("BigCo", performances);
 
     char result[MAX_PRINT_LENGTH];
-    statement(result, invoice, 3, plays, 3);
+    int status = statement(result, invoice, 3, plays, 3);
 
+    ASSERT_EQ(0, status);
     ApprovalTests::Approvals::verify(string(result));
 }
 
@@ -40,7 +41,8 @@ TEST(StatementTest, NewPlayTypes) {
     struct Invoice* invoice = Invoice_create("BigCoII", performances);
 
     char result[MAX_PRINT_LENGTH];
-    statement(result, invoice, 2, plays, 2);
+    int status = statement(result, invoice, 2, plays, 2);
 
+    ASSERT_EQ(-1, status);
     ApprovalTests::Approvals::verify(string(result));
 }
