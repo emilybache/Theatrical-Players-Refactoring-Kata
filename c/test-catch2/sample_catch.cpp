@@ -26,7 +26,7 @@ TEST_CASE ("Theatrical Players") {
 
         int status = statement(result, invoice, 3, plays, 3);
 
-        REQUIRE(status == 0);
+        REQUIRE(status == NO_ERROR);
         ApprovalTests::Approvals::verify(std::string(result));
     }
 
@@ -41,7 +41,7 @@ TEST_CASE ("Theatrical Players") {
 
         int status = statement(result, invoice, 2, plays, 2);
 
-        REQUIRE(status == -1);
+        REQUIRE(status == UNKNOWN_PLAY_TYPE);
         ApprovalTests::Approvals::verify(std::string(result));
     }
 }

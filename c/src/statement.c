@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 
+
 #define the_max(x, y) (((x) >= (y)) ? (x) : (y))
 
 int statement(char *result, struct Invoice *invoice, int numberOfPerformances,
@@ -37,7 +38,7 @@ int statement(char *result, struct Invoice *invoice, int numberOfPerformances,
         } else {
             sprintf(result, "ERROR: unknown play type %s\n", play->type);
             printf("ERROR: unknown play type %s", play->type);
-            return -1;
+            return UNKNOWN_PLAY_TYPE;
         }
 
         // add volume credits
@@ -58,7 +59,7 @@ int statement(char *result, struct Invoice *invoice, int numberOfPerformances,
     sprintf(result, "%sAmount owed is $%s\n", result,
             format_currency_number(total_amount / 100));
     sprintf(result, "%sYou earned %d credits", result, volume_credits);
-    return 0;
+    return NO_ERROR;
 }
 
 struct Invoice *Invoice_create(char *customer, struct Performance **performances) {

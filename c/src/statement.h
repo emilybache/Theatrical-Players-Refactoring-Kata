@@ -4,6 +4,8 @@
 #define MAX_NAME_LENGTH 120
 #define MAX_TYPE_LENGTH 80
 #define MAX_PERFORMANCES_PER_YEAR 365
+#define NO_ERROR 0
+#define UNKNOWN_PLAY_TYPE -1
 
 struct Play {
     char playID[MAX_NAME_LENGTH];

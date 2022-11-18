@@ -25,7 +25,7 @@ TEST(StatementTest, ExistingPlayTypes) {
     char result[MAX_PRINT_LENGTH];
     int status = statement(result, invoice, 3, plays, 3);
 
-    ASSERT_EQ(0, status);
+    ASSERT_EQ(NO_ERROR, status);
     ApprovalTests::Approvals::verify(string(result));
 }
 
@@ -43,6 +43,6 @@ TEST(StatementTest, NewPlayTypes) {
     char result[MAX_PRINT_LENGTH];
     int status = statement(result, invoice, 2, plays, 2);
 
-    ASSERT_EQ(-1, status);
+    ASSERT_EQ(UNKNOWN_PLAY_TYPE, status);
     ApprovalTests::Approvals::verify(string(result));
 }
