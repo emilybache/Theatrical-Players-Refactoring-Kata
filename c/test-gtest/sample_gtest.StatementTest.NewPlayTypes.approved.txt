@@ -1,1 +1,2 @@
-statement
+ERROR: unknown play type history
+
