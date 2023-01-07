@@ -7,18 +7,11 @@ namespace Theatrical;
 class Invoice
 {
     /**
-     * @var string
+     * @param array<int, Performance> $performances
      */
-    public $customer;
-
-    /**
-     * @var array
-     */
-    public $performances;
-
-    public function __construct(string $customer, array $performances)
-    {
-        $this->customer = $customer;
-        $this->performances = $performances;
+    public function __construct(
+        public string $customer,
+        public array $performances
+    ) {
     }
 }

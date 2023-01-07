@@ -9,14 +9,15 @@ a worked example of this exercise, in javascript.
 
 The kata uses:
 
-- [PHP 7.3 or 7.4 or 8.0+](https://www.php.net/downloads.php)
+- [PHP 8.0+](https://www.php.net/downloads.php)
 - [Composer](https://getcomposer.org)
 
 Recommended:
 
 - [Git](https://git-scm.com/downloads)
 
-Clone the repository
+See [GitHub cloning a repository](https://help.github.com/en/articles/cloning-a-repository) for details on how to
+create a local copy of this project on your computer.
 
 ```sh
 git clone git@github.com:emilybache/Theatrical-Players-Refactoring-Kata.git
@@ -42,8 +43,7 @@ The project uses composer to install:
 - [PHPUnit](https://phpunit.de/)
 - [ApprovalTests.PHP](https://github.com/approvals/ApprovalTests.php)
 - [PHPStan](https://github.com/phpstan/phpstan)
-- [Easy Coding Standard (ECS)](https://github.com/symplify/easy-coding-standard) 
-- [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer/wiki)
+- [Easy Coding Standard (ECS)](https://github.com/symplify/easy-coding-standard)
 
 ## Folders
 
@@ -58,14 +58,14 @@ PHPUnit is configured for testing, a composer script has been provided. To run t
 project run:
 
 ```shell script
-composer test
+composer tests
 ```
 
-On Windows a batch file has been created, like an alias on Linux/Mac (e.g. `alias pu="composer test"`), the same
-PHPUnit `composer test` can be run:
+On Windows a batch file has been created, like an alias on Linux/Mac (e.g. `alias pu="composer tests"`), the same
+PHPUnit `composer tests` can be run:
 
 ```shell script
-pu
+pu.bat
 ```
 
 ### Tests with Coverage Report
@@ -99,7 +99,7 @@ On Windows a batch file has been created, like an alias on Linux/Mac (e.g. `alia
  same ECS `composer check-cs` can be run:
 
 ```shell script
-cc
+cc.bat
 ```
 
 ### Fix Code
@@ -114,7 +114,7 @@ On Windows a batch file has been created, like an alias on Linux/Mac (e.g. `alia
  ECS `composer fix-cs` can be run:
 
 ```shell script
-fc
+fc.bat
 ```
 
 ## Static Analysis
@@ -130,7 +130,7 @@ On Windows a batch file has been created, like an alias on Linux/Mac (e.g. `alia
  same PHPStan `composer phpstan` can be run:
 
 ```shell script
-ps
+ps.bat
 ```
 
 **Happy coding**!

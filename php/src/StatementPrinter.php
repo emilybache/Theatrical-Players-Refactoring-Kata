@@ -9,6 +9,9 @@ use NumberFormatter;
 
 class StatementPrinter
 {
+    /**
+     * @param array<string, Play> $plays
+     */
     public function print(Invoice $invoice, array $plays): string
     {
         $totalAmount = 0;
@@ -18,7 +21,7 @@ class StatementPrinter
         $format = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
 
         foreach ($invoice->performances as $performance) {
-            $play = $plays[$performance->play_id];
+            $play = $plays[$performance->playId];
             $thisAmount = 0;
 
             switch ($play->type) {

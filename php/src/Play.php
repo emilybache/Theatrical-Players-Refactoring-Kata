@@ -4,25 +4,15 @@ declare(strict_types=1);
 
 namespace Theatrical;
 
-class Play
+class Play implements \Stringable
 {
-    /**
-     * @var string
-     */
-    public $name;
-
-    /**
-     * @var string
-     */
-    public $type;
-
-    public function __construct(string $name, string $type)
-    {
-        $this->name = $name;
-        $this->type = $type;
+    public function __construct(
+        public string $name,
+        public string $type
+    ) {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return (string) $this->name . ' : ' . $this->type;
     }
