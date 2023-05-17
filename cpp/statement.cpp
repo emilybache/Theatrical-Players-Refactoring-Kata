@@ -34,7 +34,6 @@ std::string statement(
 
     std::stringstream result;
     result.imbue(comma_locale);
-    result.precision(2);
     result << "Statement for " << invoice["customer"].get<std::string>() << '\n';
 
     for( const nlohmann::json& perf : invoice["performances"])
