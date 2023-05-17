@@ -41,41 +41,28 @@ std::string statement(
     {
         float this_amount = 0;
         const nlohmann::json& play = plays[perf["playID"].get<std::string>()];
-        if (play["type"] == "tragedy")
+      
+        switch(play["type"])
         {
-            this_amount = 40000;
-            if (perf["audience"] > 30)
-            {
-                this_amount += 1000 * (perf["audience"].get<int>() - 30);
-            }
-        }
-
-        else if (play["type"] == "comedy")
-        {
-            this_amount = 30000;
-            if (perf["audience"] > 20)
-            {
-                this_amount += 10000 + 500 * (perf["audience"].get<int>() - 20);
-            }
-
-            this_amount += 300 * perf["audience"].get<int>();
-        }
-
-        else
-        {
-            throw std::domain_error("unknown type: " + play["type"].get<std::string>());
-        }
-
-        // add volume credits
-        volume_credits += std::max(perf["audience"].get<int>() - 30, 0);
-
-        // add extra credit for every ten comedy attendees
-        if ("comedy" == play["type"])
-        {
+          case "tragedy":
+            
+            this_amount = ((perf["audience"] > 30) ? (1000 * perf["audience"].get<int>() + 10000) : 40000);
+            volume_credits += std::max(perf["audience"].get<int>() - 30, 0);
+            break;
+            
+          case "comedy":
+            
+            this_amount = 30000 + perf["audience"].get<int>() * ((perf["audience"] > 20) ? 500 : 300);
             volume_credits += perf["audience"].get<int>() / 5;
+            break;
+            
+          default:
+            
+            volume_credits += std::max(perf["audience"].get<int>() - 30, 0);
+            throw std::domain_error("unknown type: " + play["type"].get<std::string>());
+            break;
         }
-
-        // print line for this order
+     
         result << " " << play["name"].get<std::string>() << ": " << "$" << std::fixed << (this_amount/100) <<
             " (" << perf["audience"] << " seats)\n";
         total_amount += this_amount;
