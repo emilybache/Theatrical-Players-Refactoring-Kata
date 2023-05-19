@@ -19,17 +19,13 @@ class comma_numpunct : public std::numpunct<char>
     }
 };
 
-std::string statement(
-    const nlohmann::json& invoice,
-    const nlohmann::json& plays)
+const string types_of_performances[2] = {"tragedy", "comedy"};
+
+std::string statement(const nlohmann::json& invoice, const nlohmann::json& plays)
 {
     float total_amount = 0;
     int volume_credits = 0;
 
-    // this creates a new locale based on the current application default
-    // (which is either the one given on startup, but can be overriden with
-    // std::locale::global) - then extends it with an extra facet that
-    // controls numeric output.
     const std::locale comma_locale(std::locale(), new comma_numpunct());
 
     std::stringstream result;
@@ -43,13 +39,13 @@ std::string statement(
       
         switch(play["type"])
         {
-          case "tragedy":
+          case types_of_performances[0]:
             
             this_amount = ((perf["audience"] > 30) ? (1000 * perf["audience"].get<int>() + 10000) : 40000);
             volume_credits += std::max(perf["audience"].get<int>() - 30, 0);
             break;
             
-          case "comedy":
+          case types_of_performances[1]:
             
             this_amount = 30000 + perf["audience"].get<int>() * ((perf["audience"] > 20) ? 500 : 300);
             volume_credits += perf["audience"].get<int>() / 5;
