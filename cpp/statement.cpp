@@ -4,7 +4,6 @@
 #include <sstream>
 #include <iomanip>
 
-// https://stackoverflow.com/a/7277333/104370
 class comma_numpunct : public std::numpunct<char>
 {
   protected:
