@@ -1,11 +1,8 @@
 import math
-
+#
 AUDIENCE = 'audience'
-
 TYPE = 'type'
-
 PLAYID = 'playID'
-
 PERFORMANCES = 'performances'
 
 EQUAL_FUNC2 = 20
