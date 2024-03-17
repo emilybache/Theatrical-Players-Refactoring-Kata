@@ -21,13 +21,14 @@ class Statement
             $play = $plays[$performance->playId];
             $performanceCost = $performance->performancePlayCost($play);
 
-            $this->getVolumeCredits($performance, $play);
+            $this->volumeCredits += $performance->volumeCredits($play);
 
             $this->lines[] = StatementLine::create($play->name, $performanceCost, $performance->audience);
 
             $this->totalAmount += $performanceCost;
         }
     }
+
     /** @param array<string, Play> $plays */
     public static function forInvoice(Invoice $invoice, array $plays): self
     {
@@ -38,15 +39,6 @@ class Statement
     public function lines():array
     {
         return $this->lines;
-    }
-    private function getVolumeCredits(Performance $performance, Play $play): void
-    {
-        // add volume credits
-        $this->volumeCredits += max($performance->audience - 30, 0);
-        // add extra credit for every ten comedy attendees
-        if ($play->type === 'comedy') {
-            $this->volumeCredits += floor($performance->audience / 5);
-        }
     }
 
     public function total(): float

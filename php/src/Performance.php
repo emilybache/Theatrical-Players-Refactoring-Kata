@@ -57,4 +57,16 @@ class Performance
     {
         return self::COMEDY_BASELINE_COST + (300 * $performance->audience);
     }
+
+    public function volumeCredits(Play $play): float
+    {
+        if ($play->type === 'comedy') {
+            $volumeCredits = max($this->audience - 30, 0);
+            $volumeCredits += floor($this->audience / 5);
+
+            return $volumeCredits;
+        }
+
+        return max($this->audience - 30, 0);
+    }
 }
