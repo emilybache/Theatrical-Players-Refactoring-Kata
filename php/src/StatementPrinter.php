@@ -59,21 +59,16 @@ class StatementPrinter
 
     private function performancePlayCost(Play $play, Performance $performance): int|float
     {
-        $thisAmount = 0;
-
         switch ($play->type) {
             case 'tragedy':
-                $thisAmount = $this->tragedyAmount($performance);
-                break;
+                return $this->tragedyAmount($performance);
 
             case 'comedy':
-                $thisAmount = $this->comedyAmount($performance);
-                break;
+                return $this->comedyAmount($performance);
 
             default:
                 throw new Error("Unknown type: {$play->type}");
         }
-        return $thisAmount;
     }
 
     private function getVolumeCredits(Performance $performance, mixed $volumeCredits, Play $play): mixed
