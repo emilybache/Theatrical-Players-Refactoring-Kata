@@ -1,0 +1,15 @@
+FROM php:8.0-fpm
+
+RUN apt-get update && apt-get install -y \
+    libicu-dev \
+    libonig-dev \
+    libzip-dev \
+    zip \
+    unzip \
+    git \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl \
+    && docker-php-ext-install mbstring \
+    && docker-php-ext-install zip
+RUN docker-php-ext-enable intl mbstring zip
+

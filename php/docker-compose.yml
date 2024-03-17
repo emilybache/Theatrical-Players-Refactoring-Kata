@@ -1,0 +1,21 @@
+version: '3'
+services:
+  composer:
+    image: composer:lts
+    environment:
+      - COMPOSER_CACHE_DIR=/app/.cache/composer
+    volumes:
+      - .:/app
+  php:
+    build:
+      context: .
+      dockerfile: DockerFile
+    volumes:
+      - .:/app
+    working_dir: /app
+  phpunit:
+    image: php:8.0-cli
+    volumes:
+      - .:/app
+    working_dir: /app
+    entrypoint: bin/phpunit
