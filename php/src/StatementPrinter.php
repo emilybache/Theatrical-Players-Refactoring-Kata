@@ -9,6 +9,8 @@ use NumberFormatter;
 
 class StatementPrinter
 {
+    const TRAGEDY_BASELINE_COST = 40000;
+
     /**
      * @param array<string, Play> $plays
      */
@@ -38,13 +40,13 @@ class StatementPrinter
         return $result;
     }
 
-    private function tragedyAmount(Performance $performance): int|float
+    private function tragedyCost(Performance $performance): int|float
     {
-        $thisAmount = 40000;
         if ($performance->audience > 30) {
-            $thisAmount += 1000 * ($performance->audience - 30);
+            return self::TRAGEDY_BASELINE_COST + (1000 * ($performance->audience - 30));
         }
-        return $thisAmount;
+
+        return self::TRAGEDY_BASELINE_COST;
     }
 
     private function comedyAmount(Performance $performance): int|float
@@ -61,7 +63,7 @@ class StatementPrinter
     {
         switch ($play->type) {
             case 'tragedy':
-                return $this->tragedyAmount($performance);
+                return $this->tragedyCost($performance);
 
             case 'comedy':
                 return $this->comedyAmount($performance);
