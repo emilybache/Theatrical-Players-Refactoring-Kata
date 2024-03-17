@@ -24,12 +24,7 @@ class StatementPrinter
             $play = $plays[$performance->playId];
             $performanceCost = $this->performancePlayCost($play, $performance);
 
-            // add volume credits
-            $volumeCredits += max($performance->audience - 30, 0);
-            // add extra credit for every ten comedy attendees
-            if ($play->type === 'comedy') {
-                $volumeCredits += floor($performance->audience / 5);
-            }
+            $volumeCredits = $this->getVolumeCredits($performance, $volumeCredits, $play);
 
             // print line for this order
             $result .= "  {$play->name}: {$format->formatCurrency($performanceCost / 100, 'USD')} ";
@@ -79,5 +74,16 @@ class StatementPrinter
                 throw new Error("Unknown type: {$play->type}");
         }
         return $thisAmount;
+    }
+
+    private function getVolumeCredits(Performance $performance, mixed $volumeCredits, Play $play): mixed
+    {
+// add volume credits
+        $volumeCredits += max($performance->audience - 30, 0);
+        // add extra credit for every ten comedy attendees
+        if ($play->type === 'comedy') {
+            $volumeCredits += floor($performance->audience / 5);
+        }
+        return $volumeCredits;
     }
 }
