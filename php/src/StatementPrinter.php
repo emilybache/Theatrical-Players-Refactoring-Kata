@@ -26,18 +26,11 @@ class StatementPrinter
 
             switch ($play->type) {
                 case 'tragedy':
-                    $thisAmount = 40000;
-                    if ($performance->audience > 30) {
-                        $thisAmount += 1000 * ($performance->audience - 30);
-                    }
+                    $thisAmount = $this->tragedyAmount($performance);
                     break;
 
                 case 'comedy':
-                    $thisAmount = 30000;
-                    if ($performance->audience > 20) {
-                        $thisAmount += 10000 + 500 * ($performance->audience - 20);
-                    }
-                    $thisAmount += 300 * $performance->audience;
+                    $thisAmount = $this->comedyAmount($performance);
                     break;
 
                 default:
@@ -61,5 +54,24 @@ class StatementPrinter
         $result .= "Amount owed is {$format ->formatCurrency($totalAmount / 100, 'USD')}\n";
         $result .= "You earned {$volumeCredits} credits";
         return $result;
+    }
+
+    private function tragedyAmount(Performance $performance): int|float
+    {
+        $thisAmount = 40000;
+        if ($performance->audience > 30) {
+            $thisAmount += 1000 * ($performance->audience - 30);
+        }
+        return $thisAmount;
+    }
+
+    private function comedyAmount(Performance $performance): int|float
+    {
+        $thisAmount = 30000;
+        if ($performance->audience > 20) {
+            $thisAmount += 10000 + 500 * ($performance->audience - 20);
+        }
+        $thisAmount += 300 * $performance->audience;
+        return $thisAmount;
     }
 }
