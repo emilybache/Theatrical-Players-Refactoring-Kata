@@ -22,20 +22,7 @@ class StatementPrinter
 
         foreach ($invoice->performances as $performance) {
             $play = $plays[$performance->playId];
-            $thisAmount = 0;
-
-            switch ($play->type) {
-                case 'tragedy':
-                    $thisAmount = $this->tragedyAmount($performance);
-                    break;
-
-                case 'comedy':
-                    $thisAmount = $this->comedyAmount($performance);
-                    break;
-
-                default:
-                    throw new Error("Unknown type: {$play->type}");
-            }
+            $performanceCost = $this->performancePlayCost($play, $performance);
 
             // add volume credits
             $volumeCredits += max($performance->audience - 30, 0);
@@ -45,10 +32,10 @@ class StatementPrinter
             }
 
             // print line for this order
-            $result .= "  {$play->name}: {$format->formatCurrency($thisAmount / 100, 'USD')} ";
+            $result .= "  {$play->name}: {$format->formatCurrency($performanceCost / 100, 'USD')} ";
             $result .= "({$performance->audience} seats)\n";
 
-            $totalAmount += $thisAmount;
+            $totalAmount += $performanceCost;
         }
 
         $result .= "Amount owed is {$format ->formatCurrency($totalAmount / 100, 'USD')}\n";
@@ -72,6 +59,25 @@ class StatementPrinter
             $thisAmount += 10000 + 500 * ($performance->audience - 20);
         }
         $thisAmount += 300 * $performance->audience;
+        return $thisAmount;
+    }
+
+    private function performancePlayCost(Play $play, Performance $performance): int|float
+    {
+        $thisAmount = 0;
+
+        switch ($play->type) {
+            case 'tragedy':
+                $thisAmount = $this->tragedyAmount($performance);
+                break;
+
+            case 'comedy':
+                $thisAmount = $this->comedyAmount($performance);
+                break;
+
+            default:
+                throw new Error("Unknown type: {$play->type}");
+        }
         return $thisAmount;
     }
 }
