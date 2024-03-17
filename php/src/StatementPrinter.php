@@ -10,6 +10,7 @@ use NumberFormatter;
 class StatementPrinter
 {
     const TRAGEDY_BASELINE_COST = 40000;
+    const COMEDY_BASELINE_COST = 30000;
 
     /**
      * @param array<string, Play> $plays
@@ -49,14 +50,17 @@ class StatementPrinter
         return self::TRAGEDY_BASELINE_COST;
     }
 
-    private function comedyAmount(Performance $performance): int|float
+    private function comedyCost(Performance $performance): int|float
     {
-        $thisAmount = 30000;
         if ($performance->audience > 20) {
-            $thisAmount += 10000 + 500 * ($performance->audience - 20);
+            $cost = $this->comedyBaseCost($performance);
+
+            $cost += 10000 + 500 * ($performance->audience - 20);
+
+            return $cost;
         }
-        $thisAmount += 300 * $performance->audience;
-        return $thisAmount;
+
+        return $this->comedyBaseCost($performance);
     }
 
     private function performancePlayCost(Play $play, Performance $performance): int|float
@@ -66,7 +70,7 @@ class StatementPrinter
                 return $this->tragedyCost($performance);
 
             case 'comedy':
-                return $this->comedyAmount($performance);
+                return $this->comedyCost($performance);
 
             default:
                 throw new Error("Unknown type: {$play->type}");
@@ -82,5 +86,10 @@ class StatementPrinter
             $volumeCredits += floor($performance->audience / 5);
         }
         return $volumeCredits;
+    }
+
+    private function comedyBaseCost(Performance $performance): int|float
+    {
+        return self::COMEDY_BASELINE_COST + (300 * $performance->audience);
     }
 }
