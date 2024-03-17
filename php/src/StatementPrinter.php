@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Theatrical;
 
-use Error;
 use NumberFormatter;
 
 class StatementPrinter
