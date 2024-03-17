@@ -9,8 +9,8 @@ use NumberFormatter;
 
 class StatementPrinter
 {
-    const TRAGEDY_BASELINE_COST = 40000;
-    const COMEDY_BASELINE_COST = 30000;
+    private const TRAGEDY_BASELINE_COST = 40000;
+    private const COMEDY_BASELINE_COST = 30000;
 
     /**
      * @param array<string, Play> $plays
