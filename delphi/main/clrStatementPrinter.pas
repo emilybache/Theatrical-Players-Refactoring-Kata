@@ -13,10 +13,22 @@ uses
 
 type
   TStatementPrinter = class(TObject)
+  private
+    class function FormatCurrency(AValue: Double): string; static;
+  public
     class function Print(AInvoice: TInvoice; APlays: TPlays): string;
   end;
 
 implementation
+
+class function TStatementPrinter.FormatCurrency(AValue: Double): string;
+var
+  Format: TFormatSettings;
+begin
+  Format.DecimalSeparator := '.';
+  Format.ThousandSeparator := ',';
+  Result := FormatFloat('$#,##0.00', AValue, Format);
+end;
 
 class function TStatementPrinter.Print(AInvoice: TInvoice; APlays: TPlays): string;
 var
@@ -61,11 +73,11 @@ begin
       VolumeCredits := VolumeCredits + Math.floor(Performance.Audience / 5);
 
     // print line for this order
-    Result := Result + Format('  %s: %s (%d seats)'#13#10, [Play.Name, FloatToStr(ThisAmount / 100), Performance.Audience]);
+    Result := Result + Format('  %s: %s (%d seats)'#13#10, [Play.Name, FormatCurrency(ThisAmount / 100), Performance.Audience]);
     TotalAmount := TotalAmount + ThisAmount;
   end;
 
-  Result := Result + Format('Amount owed is %s'#13#10, [FloatToStr(TotalAmount / 100)]);
+  Result := Result + Format('Amount owed is %s'#13#10, [FormatCurrency(TotalAmount / 100)]);
   Result := Result + Format('You earned %d credits'#13#10, [VolumeCredits]);
 end;
 

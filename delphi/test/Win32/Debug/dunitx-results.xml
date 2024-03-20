@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<test-results name="I:\Theatrical-Players-Refactoring-Kata\delphi\test\Win32\Debug\TestTheatricalPlayers.exe" total="4" errors="0" failures="0" ignored="0" inconclusive="0" not-run="0" skipped="0" invalid="0" date="2024-03-20" time="1.485">
+  <culture-info current-culture="en" current-uiculture="en" />
+  <test-suite type="Assembly" name="TestTheatricalPlayers.exe" executed="true" result="Success" success="True" time="1.485" asserts="0">
+    <results>
+        <test-suite type="Namespace" name="uTestStatementPrinter" executed="true" result="Success" success="True" time="1.484" asserts="0" >
+          <results>
+              <test-suite type="Fixture" name="TTestStatementPrinter" executed="True" result="Success" success="True" time="1.484" >
+                <results>
+                  <test-case name="TestTragedy" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestComedy" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                  <test-case name="TestUnknownPlay" executed="True" result="Success" success="True" time="1.485" asserts="0" />
+                  <test-case name="TestMultiplePerformances" executed="True" result="Success" success="True" time="0.000" asserts="0" />
+                </results>
+              </test-suite>
+          </results>
+        </test-suite>
+    </results>
+  </test-suite>
+</test-results>
