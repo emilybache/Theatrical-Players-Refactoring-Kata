@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{CBF9C7F3-42F5-4206-9FF0-07E6D2F2E045}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="main\TheatricalPlayers.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="test\TestTheatricalPlayers.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="TheatricalPlayers">
+        <MSBuild Projects="main\TheatricalPlayers.dproj"/>
+    </Target>
+    <Target Name="TheatricalPlayers:Clean">
+        <MSBuild Projects="main\TheatricalPlayers.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TheatricalPlayers:Make">
+        <MSBuild Projects="main\TheatricalPlayers.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestTheatricalPlayers">
+        <MSBuild Projects="test\TestTheatricalPlayers.dproj"/>
+    </Target>
+    <Target Name="TestTheatricalPlayers:Clean">
+        <MSBuild Projects="test\TestTheatricalPlayers.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestTheatricalPlayers:Make">
+        <MSBuild Projects="test\TestTheatricalPlayers.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="TheatricalPlayers;TestTheatricalPlayers"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="TheatricalPlayers:Clean;TestTheatricalPlayers:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="TheatricalPlayers:Make;TestTheatricalPlayers:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
