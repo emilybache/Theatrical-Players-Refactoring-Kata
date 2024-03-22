@@ -21,6 +21,8 @@ implementation
 
 constructor TPerformance.Create(APlayId: string; AAudience: Integer);
 begin
+  inherited Create;
+
   PlayId := APlayId;
   Audience := AAudience;
 end;

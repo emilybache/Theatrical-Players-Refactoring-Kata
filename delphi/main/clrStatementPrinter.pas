@@ -81,5 +81,4 @@ begin
   Result := Result + Format('You earned %d credits'#13#10, [VolumeCredits]);
 end;
 
-
 end.

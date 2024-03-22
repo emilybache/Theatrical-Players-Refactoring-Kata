@@ -26,6 +26,8 @@ implementation
 
 constructor TPlay.Create(APlayID, AName, AType: string);
 begin
+  inherited Create;
+
   PlayId := APlayID;
   Name := AName;
   &Type := AType;

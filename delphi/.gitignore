@@ -74,3 +74,9 @@ unittests/Win32/PLAINDUNITX/dunitx-results.xml
 unittests/Win32/TESTINSIGHT/TestInsightSettings.ini
 *.log
 unittests/Win32/CI/dunitx-results.xml
+
+# DUnit-generated files
+dunitx-results.xml
+
+# madExcept-Setting
+*.mes

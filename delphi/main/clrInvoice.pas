@@ -14,7 +14,6 @@ type
     Performances: TPerformances;
 
     constructor Create(ACustomer: string; APerformances: TPerformances);
-    destructor Destroy; override;
   end;
 
   TInvoices = class(TObjectList<TInvoice>)
@@ -24,15 +23,10 @@ implementation
 
 constructor TInvoice.Create(ACustomer: string; APerformances: TPerformances);
 begin
+  inherited Create;
+
   Customer := ACustomer;
   Performances := APerformances;
-end;
-
-destructor TInvoice.Destroy;
-begin
-  FreeAndNil(Performances);
-
-  inherited;
 end;
 
 end.

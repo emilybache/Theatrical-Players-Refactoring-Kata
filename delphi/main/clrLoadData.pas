@@ -18,8 +18,6 @@ type
 
 implementation
 
-
-
 class procedure TLoadData.LoadPLays(APLays: TPlays);
 var
   PlaysJSON: TJSONObject;
