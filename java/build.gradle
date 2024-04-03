@@ -5,7 +5,12 @@ plugins {
 
 group 'kata'
 version '1.0-SNAPSHOT'
-sourceCompatibility = '17'
+
+java {
+    toolchain {
+        it.languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 
 repositories {
     mavenCentral()
@@ -19,9 +24,9 @@ test {
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.2'
-    testImplementation 'com.approvaltests:approvaltests:15.6.0'
-    testImplementation 'org.assertj:assertj-core:3.19.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'com.approvaltests:approvaltests:23.0.1'
+    testImplementation 'org.assertj:assertj-core:3.25.3'
 }
 
 pitest {
