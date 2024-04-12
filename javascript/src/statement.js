@@ -3,11 +3,11 @@ function statement (invoice, plays) {
     const statementData = {};
     statementData.customer = invoice.customer;
     statementData.performances = invoice.performances;
-    return renderPlainText(statementData, invoice, plays);
+    return renderPlainText(statementData, plays);
 }
 
 
-function renderPlainText(data, invoice, plays) {
+function renderPlainText(data, plays) {
     let result = `Statement for ${data.customer}\n`;
     for (let perf of data.performances) {
         // print line for this order
