@@ -5,7 +5,7 @@ function statement (invoice, plays) {
 }
 
 
-function renderPlainText(statementData, invoice, plays) {
+function renderPlainText(data, invoice, plays) {
     let result = `Statement for ${invoice.customer}\n`;
     for (let perf of invoice.performances) {
         // print line for this order
