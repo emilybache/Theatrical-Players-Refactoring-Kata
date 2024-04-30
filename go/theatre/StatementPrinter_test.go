@@ -9,43 +9,8 @@ import (
 
 func TestPrinterPrintByApproval(t *testing.T) {
 	verify(t, "json", "txt", func(t testing.TB, data []byte) []byte {
-		var in struct {
-			Plays []struct {
-				ID   string
-				Play struct {
-					Name string
-					Type string
-				}
-			}
-			Invoice struct {
-				Customer     string
-				Performances []struct {
-					PlayID   string
-					Audience int
-				}
-			}
-		}
-
-		if err := json.Unmarshal(data, &in); err != nil {
-			t.Fatalf("failed to unmarshal input data: %v", err)
-			return nil
-		}
-
-		// copy test-structure to production structure. Making use of matching types.
-		plays := make(map[string]theatre.Play)
-		invoice := theatre.Invoice{
-			Customer:     in.Invoice.Customer,
-			Performances: make([]theatre.Performance, 0, len(in.Invoice.Performances)),
-		}
-		for _, perf := range in.Invoice.Performances {
-			invoice.Performances = append(invoice.Performances, perf)
-		}
-		for _, identifiedPlay := range in.Plays {
-			plays[identifiedPlay.ID] = identifiedPlay.Play
-		}
-
 		var printer theatre.StatementPrinter
-		statement, err := printer.Print(invoice, plays)
+		statement, err := printer.Print(createTestData(t, data))
 		if err != nil {
 			t.Fatalf("failed to create statement, unexpected error: %v", err)
 		}
@@ -71,4 +36,42 @@ func TestStatementWithNewPlayTypes(t *testing.T) {
 	if err == nil {
 		t.Errorf("Expected an error, got none")
 	}
+}
+
+func createTestData(t testing.TB, data []byte) (theatre.Invoice, map[string]theatre.Play) {
+	var in struct {
+		Plays []struct {
+			ID   string
+			Play struct {
+				Name string
+				Type string
+			}
+		}
+		Invoice struct {
+			Customer     string
+			Performances []struct {
+				PlayID   string
+				Audience int
+			}
+		}
+	}
+
+	if err := json.Unmarshal(data, &in); err != nil {
+		t.Fatalf("failed to unmarshal input data: %v", err)
+	}
+
+	invoice := theatre.Invoice{
+		Customer:     in.Invoice.Customer,
+		Performances: make([]theatre.Performance, 0, len(in.Invoice.Performances)),
+	}
+	for _, perf := range in.Invoice.Performances {
+		invoice.Performances = append(invoice.Performances, perf)
+	}
+
+	plays := make(map[string]theatre.Play)
+	for _, identifiedPlay := range in.Plays {
+		plays[identifiedPlay.ID] = identifiedPlay.Play
+	}
+
+	return invoice, plays
 }
