@@ -1,3 +1,5 @@
+github.com/approvals/go-approval-tests v0.0.0-20240417152556-434b9105e958 h1:7/wXpCITDdUf5qOuxr8e9YwFEJIPkZZyD0Z3nvV1Zwc=
+github.com/approvals/go-approval-tests v0.0.0-20240417152556-434b9105e958/go.mod h1:PJOqSY8IofNv3heAD6k8E7EfFS6okiSS9bSAasaAUME=
 github.com/cockroachdb/apd v1.1.0 h1:3LFP3629v+1aKXU5Q37mxmRxX/pIu1nijXydLShEq5I=
 github.com/cockroachdb/apd v1.1.0/go.mod h1:8Sl8LxpKi29FqWXR16WEFZRNSz3SoPzUzeMeY4+DwBQ=
 github.com/leekchan/accounting v0.0.0-20190702062627-a09595581342 h1:vzuUv5azbeM31DiEL386i5eQESs5FNN2gDfkPowzNkk=

@@ -2,20 +2,30 @@ package theatre_test
 
 import (
 	"encoding/json"
+	approvals "github.com/approvals/go-approval-tests"
+	"os"
 	"testing"
 
 	"github.com/emilybache/Theatrical-Players-Refactoring-Kata/go/theatre"
 )
 
+func TestMain(m *testing.M) {
+	approvals.UseFolder("testdata")
+	m.Run()
+}
+
 func TestPrinterPrintByApproval(t *testing.T) {
-	verify(t, "json", "txt", func(t testing.TB, data []byte) []byte {
-		var printer theatre.StatementPrinter
-		statement, err := printer.Print(createTestData(t, data))
-		if err != nil {
-			t.Fatalf("failed to create statement, unexpected error: %v", err)
-		}
-		return []byte(statement)
-	})
+	data, err := os.ReadFile("testdata/input.json")
+	if err != nil {
+		t.Fatal("failed to open testdata/input.json", err)
+	}
+
+	var printer theatre.StatementPrinter
+	statement, err := printer.Print(createTestData(t, data))
+	if err != nil {
+		t.Fatalf("failed to create statement, unexpected error: %v", err)
+	}
+	approvals.VerifyString(t, statement)
 }
 
 func TestStatementWithNewPlayTypes(t *testing.T) {
