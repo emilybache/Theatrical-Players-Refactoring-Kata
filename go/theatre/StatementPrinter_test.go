@@ -47,25 +47,11 @@ func createTestData(t testing.TB, data []byte) (theatre.Invoice, map[string]thea
 				Type string
 			}
 		}
-		Invoice struct {
-			Customer     string
-			Performances []struct {
-				PlayID   string
-				Audience int
-			}
-		}
+		Invoice theatre.Invoice
 	}
 
 	if err := json.Unmarshal(data, &in); err != nil {
 		t.Fatalf("failed to unmarshal input data: %v", err)
-	}
-
-	invoice := theatre.Invoice{
-		Customer:     in.Invoice.Customer,
-		Performances: make([]theatre.Performance, 0, len(in.Invoice.Performances)),
-	}
-	for _, perf := range in.Invoice.Performances {
-		invoice.Performances = append(invoice.Performances, perf)
 	}
 
 	plays := make(map[string]theatre.Play)
@@ -73,5 +59,5 @@ func createTestData(t testing.TB, data []byte) (theatre.Invoice, map[string]thea
 		plays[identifiedPlay.ID] = identifiedPlay.Play
 	}
 
-	return invoice, plays
+	return in.Invoice, plays
 }
