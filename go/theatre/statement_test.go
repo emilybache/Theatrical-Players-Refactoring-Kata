@@ -3,6 +3,7 @@ package theatre_test
 import (
 	"encoding/json"
 	approvals "github.com/approvals/go-approval-tests"
+	"io"
 	"os"
 	"testing"
 
@@ -15,13 +16,13 @@ func TestMain(m *testing.M) {
 }
 
 func TestPrinterPrintByApproval(t *testing.T) {
-	data, err := os.ReadFile("testdata/input.json")
+	file, err := os.Open("testdata/input.json")
 	if err != nil {
 		t.Fatal("failed to open testdata/input.json", err)
 	}
 
 	var printer theatre.StatementPrinter
-	statement, err := printer.Print(createTestData(t, data))
+	statement, err := printer.Print(createTestData(t, file))
 	if err != nil {
 		t.Fatalf("failed to create statement, unexpected error: %v", err)
 	}
@@ -48,7 +49,7 @@ func TestStatementWithNewPlayTypes(t *testing.T) {
 	}
 }
 
-func createTestData(t testing.TB, data []byte) (theatre.Invoice, map[string]theatre.Play) {
+func createTestData(t testing.TB, r io.Reader) (theatre.Invoice, map[string]theatre.Play) {
 	var in struct {
 		Plays []struct {
 			ID   string
@@ -60,8 +61,8 @@ func createTestData(t testing.TB, data []byte) (theatre.Invoice, map[string]thea
 		Invoice theatre.Invoice
 	}
 
-	if err := json.Unmarshal(data, &in); err != nil {
-		t.Fatalf("failed to unmarshal input data: %v", err)
+	if err := json.NewDecoder(r).Decode(&in); err != nil {
+		t.Fatalf("failed to decode input data: %v", err)
 	}
 
 	plays := make(map[string]theatre.Play)
