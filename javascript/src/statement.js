@@ -26,5 +26,8 @@ function renderPlainText(data) {
 
 }
 
+function renderHtml(data) {
+    // TODO
+}
 
 module.exports = statement;
