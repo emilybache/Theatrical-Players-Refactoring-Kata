@@ -11,9 +11,8 @@ public class StatementPrinter {
 
         for (var perf : invoice.performances) {
             // print line for this order
-            int amount = amountFor(perf, playForPerformance(plays, perf));
             result += String.format("  %s: %s (%s seats)\n", playForPerformance(plays, perf).name,
-                    formatAsUSD(amount),
+                    formatAsUSD(amountFor(perf, playForPerformance(plays, perf))),
                     perf.audience);
         }
 
