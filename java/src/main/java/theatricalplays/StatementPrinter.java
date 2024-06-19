@@ -7,10 +7,7 @@ import java.util.Map;
 public class StatementPrinter {
 
     public String print(Invoice invoice, Map<String, Play> plays) {
-        var totalAmount = 0;
         var result = String.format("Statement for %s\n", invoice.customer);
-
-        var volumeCredits = totalVolumeCredits(invoice, plays);
 
         for (var perf : invoice.performances) {
             // print line for this order
@@ -18,10 +15,15 @@ public class StatementPrinter {
             result += String.format("  %s: %s (%s seats)\n", playForPerformance(plays, perf).name,
                     formatAsUSD(amount),
                     perf.audience);
+        }
+
+        var totalAmount = 0;
+        for (var perf : invoice.performances) {
             totalAmount += amountFor(perf, playForPerformance(plays, perf));
         }
+
         result += String.format("Amount owed is %s\n", formatAsUSD(totalAmount));
-        result += String.format("You earned %s credits\n", volumeCredits);
+        result += String.format("You earned %s credits\n", totalVolumeCredits(invoice, plays));
         return result;
     }
 
