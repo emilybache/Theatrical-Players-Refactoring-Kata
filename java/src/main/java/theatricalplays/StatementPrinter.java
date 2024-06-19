@@ -16,12 +16,17 @@ public class StatementPrinter {
         for (var perf : invoice.performances) {
             volumeCredits += volumeCreditsFor(perf, playForPerformance(plays, perf));
             // print line for this order
-            result += String.format("  %s: %s (%s seats)\n", playForPerformance(plays, perf).name, frmt.format(amountFor(perf, playForPerformance(plays, perf)) / 100), perf.audience);
+            int amount = amountFor(perf, playForPerformance(plays, perf));
+            result += String.format("  %s: %s (%s seats)\n", playForPerformance(plays, perf).name, formatAsUSD(frmt, amount), perf.audience);
             totalAmount += amountFor(perf, playForPerformance(plays, perf));
         }
         result += String.format("Amount owed is %s\n", frmt.format(totalAmount / 100));
         result += String.format("You earned %s credits\n", volumeCredits);
         return result;
+    }
+
+    private static String formatAsUSD(NumberFormat frmt, int amount) {
+        return frmt.format(amount / 100);
     }
 
     private static Play playForPerformance(Map<String, Play> plays, Performance perf) {
