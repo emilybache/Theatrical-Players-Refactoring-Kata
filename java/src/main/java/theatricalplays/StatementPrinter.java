@@ -8,11 +8,11 @@ public class StatementPrinter {
 
     public String print(Invoice invoice, Map<String, Play> plays) {
         var totalAmount = 0;
-        var volumeCredits = 0;
         var result = String.format("Statement for %s\n", invoice.customer);
 
+        var volumeCredits = totalVolumeCredits(invoice, plays);
+
         for (var perf : invoice.performances) {
-            volumeCredits += volumeCreditsFor(perf, playForPerformance(plays, perf));
             // print line for this order
             int amount = amountFor(perf, playForPerformance(plays, perf));
             result += String.format("  %s: %s (%s seats)\n", playForPerformance(plays, perf).name,
@@ -23,6 +23,14 @@ public class StatementPrinter {
         result += String.format("Amount owed is %s\n", formatAsUSD(totalAmount));
         result += String.format("You earned %s credits\n", volumeCredits);
         return result;
+    }
+
+    private static int totalVolumeCredits(Invoice invoice, Map<String, Play> plays) {
+        var volumeCredits = 0;
+        for (var perf : invoice.performances) {
+            volumeCredits += volumeCreditsFor(perf, playForPerformance(plays, perf));
+        }
+        return volumeCredits;
     }
 
     private static String formatAsUSD(int amount) {
