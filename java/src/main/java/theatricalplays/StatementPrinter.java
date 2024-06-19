@@ -17,9 +17,7 @@ public class StatementPrinter {
                     perf.audience);
         }
 
-        var totalAmount = totalAmountFor(invoice, plays);
-
-        result += String.format("Amount owed is %s\n", formatAsUSD(totalAmount));
+        result += String.format("Amount owed is %s\n", formatAsUSD(totalAmountFor(invoice, plays)));
         result += String.format("You earned %s credits\n", totalVolumeCredits(invoice, plays));
         return result;
     }
