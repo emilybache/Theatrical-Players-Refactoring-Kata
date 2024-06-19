@@ -11,21 +11,22 @@ public class StatementPrinter {
         var volumeCredits = 0;
         var result = String.format("Statement for %s\n", invoice.customer);
 
-        NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
-
         for (var perf : invoice.performances) {
             volumeCredits += volumeCreditsFor(perf, playForPerformance(plays, perf));
             // print line for this order
             int amount = amountFor(perf, playForPerformance(plays, perf));
-            result += String.format("  %s: %s (%s seats)\n", playForPerformance(plays, perf).name, formatAsUSD(frmt, amount), perf.audience);
+            result += String.format("  %s: %s (%s seats)\n", playForPerformance(plays, perf).name,
+                    formatAsUSD(amount),
+                    perf.audience);
             totalAmount += amountFor(perf, playForPerformance(plays, perf));
         }
-        result += String.format("Amount owed is %s\n", frmt.format(totalAmount / 100));
+        result += String.format("Amount owed is %s\n", formatAsUSD(totalAmount));
         result += String.format("You earned %s credits\n", volumeCredits);
         return result;
     }
 
-    private static String formatAsUSD(NumberFormat frmt, int amount) {
+    private static String formatAsUSD(int amount) {
+        NumberFormat frmt = NumberFormat.getCurrencyInstance(Locale.US);
         return frmt.format(amount / 100);
     }
 
