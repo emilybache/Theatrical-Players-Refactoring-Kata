@@ -17,14 +17,19 @@ public class StatementPrinter {
                     perf.audience);
         }
 
-        var totalAmount = 0;
-        for (var perf : invoice.performances) {
-            totalAmount += amountFor(perf, playForPerformance(plays, perf));
-        }
+        var totalAmount = totalAmountFor(invoice, plays);
 
         result += String.format("Amount owed is %s\n", formatAsUSD(totalAmount));
         result += String.format("You earned %s credits\n", totalVolumeCredits(invoice, plays));
         return result;
+    }
+
+    private static int totalAmountFor(Invoice invoice, Map<String, Play> plays) {
+        var totalAmount = 0;
+        for (var perf : invoice.performances) {
+            totalAmount += amountFor(perf, playForPerformance(plays, perf));
+        }
+        return totalAmount;
     }
 
     private static int totalVolumeCredits(Invoice invoice, Map<String, Play> plays) {
