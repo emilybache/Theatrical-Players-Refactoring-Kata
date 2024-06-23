@@ -1,29 +1,29 @@
 package theatricalplays;
 
 public final class PerformanceData {
-    private final Performance perf;
+    private final Performance performance;
     private final Play play;
 
-    public PerformanceData(Performance perf, Play play) {
-        this.perf = perf;
+    public PerformanceData(Performance performance, Play play) {
+        this.performance = performance;
         this.play = play;
     }
 
     int amount() {
         int result;
-        switch (getPlay().type) {
+        switch (play.type) {
             case "tragedy":
                 result = 40000;
-                if (getPerf().audience > 30) {
-                    result += 1000 * (getPerf().audience - 30);
+                if (performance.audience > 30) {
+                    result += 1000 * (performance.audience - 30);
                 }
                 break;
             case "comedy":
                 result = 30000;
-                if (getPerf().audience > 20) {
-                    result += 10000 + 500 * (getPerf().audience - 20);
+                if (performance.audience > 20) {
+                    result += 10000 + 500 * (performance.audience - 20);
                 }
-                result += 300 * getPerf().audience;
+                result += 300 * performance.audience;
                 break;
             default:
                 throw new Error("unknown type: ${play.type}");
@@ -34,17 +34,10 @@ public final class PerformanceData {
     int volumeCredits() {
         var result = 0;
         // add volume credits
-        result += Math.max(getPerf().audience - 30, 0);
+        result += Math.max(performance.audience - 30, 0);
         // add extra credit for every ten comedy attendees
-        if ("comedy".equals(getPlay().type)) result += Math.floor(getPerf().audience / 5);
+        if ("comedy".equals(play.type)) result += Math.floor(performance.audience / 5);
         return result;
     }
 
-    public Play getPlay() {
-        return play;
-    }
-
-    public Performance getPerf() {
-        return perf;
-    }
 }

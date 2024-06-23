@@ -14,7 +14,7 @@ public final class StatementData {
 
     int totalAmount() {
         var totalAmount = 0;
-        for (var perf : getPerformances()) {
+        for (var perf : invoice.performances) {
             totalAmount += getPerformanceData(perf).amount();
         }
         return totalAmount;
@@ -22,7 +22,7 @@ public final class StatementData {
 
     int totalVolumeCredits() {
         var volumeCredits = 0;
-        for (var perf : getPerformances()) {
+        for (var perf : invoice.performances) {
             volumeCredits += getPerformanceData(perf).volumeCredits();
         }
         return volumeCredits;
@@ -38,10 +38,6 @@ public final class StatementData {
 
     List<Performance> getPerformances() {
         return invoice.performances;
-    }
-
-    public Map<String, Play> getPlays() {
-        return plays;
     }
 
     public Invoice getInvoice() {
