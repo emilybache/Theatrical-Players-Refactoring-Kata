@@ -9,6 +9,10 @@ public class StatementPrinter {
     public String print(Invoice invoice, Map<String, Play> plays) {
         StatementData statementData = new StatementData(invoice, plays);
 
+        return renderPlainText(statementData);
+    }
+
+    private static String renderPlainText(StatementData statementData) {
         var result = String.format("Statement for %s\n", statementData.getInvoice().customer);
 
         for (var perf : statementData.getPerformances()) {
@@ -21,6 +25,10 @@ public class StatementPrinter {
         result += String.format("Amount owed is %s\n", formatAsUSD(statementData.totalAmount()));
         result += String.format("You earned %s credits\n", statementData.totalVolumeCredits());
         return result;
+    }
+    private static String renderHtml(StatementData statementData) {
+        // TODO: implement this
+        return "";
     }
 
     private static String formatAsUSD(int amount) {
