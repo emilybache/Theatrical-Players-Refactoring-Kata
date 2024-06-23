@@ -34,7 +34,7 @@ public class StatementPrinter {
     private static int totalVolumeCredits(StatementData statementData) {
         var volumeCredits = 0;
         for (var perf : statementData.getPerformances()) {
-            volumeCredits += volumeCreditsFor(perf, playForPerformance(statementData.getPlays(), perf));
+            volumeCredits += volumeCreditsFor(new PerformanceData(perf, playForPerformance(statementData.getPlays(), perf)));
         }
         return volumeCredits;
     }
@@ -48,12 +48,12 @@ public class StatementPrinter {
         return plays.get(perf.playID);
     }
 
-    private static int volumeCreditsFor(Performance perf, Play play) {
+    private static int volumeCreditsFor(PerformanceData performanceData) {
         var result = 0;
         // add volume credits
-        result += Math.max(perf.audience - 30, 0);
+        result += Math.max(performanceData.perf().audience - 30, 0);
         // add extra credit for every ten comedy attendees
-        if ("comedy".equals(play.type)) result += Math.floor(perf.audience / 5);
+        if ("comedy".equals(performanceData.play().type)) result += Math.floor(performanceData.perf().audience / 5);
         return result;
     }
 
