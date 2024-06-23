@@ -16,15 +16,15 @@ public class StatementPrinter {
                     perf.audience);
         }
 
-        result += String.format("Amount owed is %s\n", formatAsUSD(totalAmountFor(invoice, plays)));
+        result += String.format("Amount owed is %s\n", formatAsUSD(totalAmountFor(new StatementData(invoice, plays))));
         result += String.format("You earned %s credits\n", totalVolumeCredits(invoice, plays));
         return result;
     }
 
-    private static int totalAmountFor(Invoice invoice, Map<String, Play> plays) {
+    private static int totalAmountFor(StatementData statementData) {
         var totalAmount = 0;
-        for (var perf : invoice.performances) {
-            totalAmount += amountFor(perf, playForPerformance(plays, perf));
+        for (var perf : statementData.invoice().performances) {
+            totalAmount += amountFor(perf, playForPerformance(statementData.plays(), perf));
         }
         return totalAmount;
     }
