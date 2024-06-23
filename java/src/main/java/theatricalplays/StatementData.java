@@ -12,12 +12,12 @@ public final class StatementData {
         this.plays = plays;
     }
 
-    Play playForPerformance(Map<String, Play> plays, Performance perf) {
+    Play playForPerformance(Performance perf) {
         return plays.get(perf.playID);
     }
 
     PerformanceData getPerformanceData(Performance perf) {
-        return new PerformanceData(perf, this.playForPerformance(plays, perf));
+        return new PerformanceData(perf, plays.get(perf.playID));
     }
 
     List<Performance> getPerformances() {
