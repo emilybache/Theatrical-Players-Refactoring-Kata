@@ -13,19 +13,17 @@ public final class StatementData {
     }
 
     int totalAmount() {
-        var totalAmount = 0;
-        for (var perf : invoice.performances) {
-            totalAmount += getPerformanceData(perf).amount();
-        }
-        return totalAmount;
+        return invoice.performances
+                .stream()
+                .mapToInt(perf -> getPerformanceData(perf).amount())
+                .sum();
     }
 
     int totalVolumeCredits() {
-        var volumeCredits = 0;
-        for (var perf : invoice.performances) {
-            volumeCredits += getPerformanceData(perf).volumeCredits();
-        }
-        return volumeCredits;
+        return invoice.performances
+                .stream()
+                .mapToInt(perf -> getPerformanceData(perf).volumeCredits())
+                .sum();
     }
 
     Play playForPerformance(Performance perf) {
