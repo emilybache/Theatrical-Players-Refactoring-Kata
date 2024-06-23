@@ -14,7 +14,7 @@ public class StatementPrinter {
         for (var perf : statementData.getPerformances()) {
             // print line for this order
             result += String.format("  %s: %s (%s seats)\n", playForPerformance(statementData.getPlays(), perf).name,
-                    formatAsUSD(amountFor(new PerformanceData(perf, playForPerformance(statementData.getPlays(), perf)))),
+                    formatAsUSD(new PerformanceData(perf, playForPerformance(statementData.getPlays(), perf)).amount()),
                     perf.audience);
         }
 
@@ -26,7 +26,7 @@ public class StatementPrinter {
     private static int totalAmountFor(StatementData statementData) {
         var totalAmount = 0;
         for (var perf : statementData.getPerformances()) {
-            totalAmount += amountFor(new PerformanceData(perf, playForPerformance(statementData.getPlays(), perf)));
+            totalAmount += new PerformanceData(perf, playForPerformance(statementData.getPlays(), perf)).amount();
         }
         return totalAmount;
     }
@@ -34,7 +34,7 @@ public class StatementPrinter {
     private static int totalVolumeCredits(StatementData statementData) {
         var volumeCredits = 0;
         for (var perf : statementData.getPerformances()) {
-            volumeCredits += volumeCreditsFor(new PerformanceData(perf, playForPerformance(statementData.getPlays(), perf)));
+            volumeCredits += new PerformanceData(perf, playForPerformance(statementData.getPlays(), perf)).volumeCredits();
         }
         return volumeCredits;
     }
@@ -46,37 +46,6 @@ public class StatementPrinter {
 
     private static Play playForPerformance(Map<String, Play> plays, Performance perf) {
         return plays.get(perf.playID);
-    }
-
-    private static int volumeCreditsFor(PerformanceData performanceData) {
-        var result = 0;
-        // add volume credits
-        result += Math.max(performanceData.getPerf().audience - 30, 0);
-        // add extra credit for every ten comedy attendees
-        if ("comedy".equals(performanceData.getPlay().type)) result += Math.floor(performanceData.getPerf().audience / 5);
-        return result;
-    }
-
-    private static int amountFor(PerformanceData performanceData) {
-        int result;
-        switch (performanceData.getPlay().type) {
-            case "tragedy":
-                result = 40000;
-                if (performanceData.getPerf().audience > 30) {
-                    result += 1000 * (performanceData.getPerf().audience - 30);
-                }
-                break;
-            case "comedy":
-                result = 30000;
-                if (performanceData.getPerf().audience > 20) {
-                    result += 10000 + 500 * (performanceData.getPerf().audience - 20);
-                }
-                result += 300 * performanceData.getPerf().audience;
-                break;
-            default:
-                throw new Error("unknown type: ${play.type}");
-        }
-        return result;
     }
 
 }
