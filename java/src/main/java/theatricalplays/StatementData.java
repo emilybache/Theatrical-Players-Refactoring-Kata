@@ -1,7 +1,6 @@
 package theatricalplays;
 
 import java.util.Map;
-import java.util.Objects;
 
 public final class StatementData {
     private final Invoice invoice;
@@ -12,12 +11,11 @@ public final class StatementData {
         this.plays = plays;
     }
 
-    public Invoice invoice() {
-        return invoice;
-    }
-
-    public Map<String, Play> plays() {
+    public Map<String, Play> getPlays() {
         return plays;
     }
 
+    public Invoice getInvoice() {
+        return invoice;
+    }
 }

@@ -17,22 +17,22 @@ public class StatementPrinter {
         }
 
         result += String.format("Amount owed is %s\n", formatAsUSD(totalAmountFor(new StatementData(invoice, plays))));
-        result += String.format("You earned %s credits\n", totalVolumeCredits(invoice, plays));
+        result += String.format("You earned %s credits\n", totalVolumeCredits(new StatementData(invoice, plays)));
         return result;
     }
 
     private static int totalAmountFor(StatementData statementData) {
         var totalAmount = 0;
-        for (var perf : statementData.invoice().performances) {
-            totalAmount += amountFor(perf, playForPerformance(statementData.plays(), perf));
+        for (var perf : statementData.getInvoice().performances) {
+            totalAmount += amountFor(perf, playForPerformance(statementData.getPlays(), perf));
         }
         return totalAmount;
     }
 
-    private static int totalVolumeCredits(Invoice invoice, Map<String, Play> plays) {
+    private static int totalVolumeCredits(StatementData statementData) {
         var volumeCredits = 0;
-        for (var perf : invoice.performances) {
-            volumeCredits += volumeCreditsFor(perf, playForPerformance(plays, perf));
+        for (var perf : statementData.getInvoice().performances) {
+            volumeCredits += volumeCreditsFor(perf, playForPerformance(statementData.getPlays(), perf));
         }
         return volumeCredits;
     }
