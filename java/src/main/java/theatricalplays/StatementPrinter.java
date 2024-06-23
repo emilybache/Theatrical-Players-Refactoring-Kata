@@ -18,8 +18,8 @@ public class StatementPrinter {
                     perf.audience);
         }
 
-        result += String.format("Amount owed is %s\n", formatAsUSD(StatementData.totalAmountFor(statementData)));
-        result += String.format("You earned %s credits\n", StatementData.totalVolumeCredits(statementData));
+        result += String.format("Amount owed is %s\n", formatAsUSD(statementData.totalAmount()));
+        result += String.format("You earned %s credits\n", statementData.totalVolumeCredits());
         return result;
     }
 
