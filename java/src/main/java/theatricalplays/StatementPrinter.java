@@ -18,25 +18,9 @@ public class StatementPrinter {
                     perf.audience);
         }
 
-        result += String.format("Amount owed is %s\n", formatAsUSD(totalAmountFor(statementData)));
-        result += String.format("You earned %s credits\n", totalVolumeCredits(statementData));
+        result += String.format("Amount owed is %s\n", formatAsUSD(StatementData.totalAmountFor(statementData)));
+        result += String.format("You earned %s credits\n", StatementData.totalVolumeCredits(statementData));
         return result;
-    }
-
-    private static int totalAmountFor(StatementData statementData) {
-        var totalAmount = 0;
-        for (var perf : statementData.getPerformances()) {
-            totalAmount += statementData.getPerformanceData(perf).amount();
-        }
-        return totalAmount;
-    }
-
-    private static int totalVolumeCredits(StatementData statementData) {
-        var volumeCredits = 0;
-        for (var perf : statementData.getPerformances()) {
-            volumeCredits += statementData.getPerformanceData(perf).volumeCredits();
-        }
-        return volumeCredits;
     }
 
     private static String formatAsUSD(int amount) {

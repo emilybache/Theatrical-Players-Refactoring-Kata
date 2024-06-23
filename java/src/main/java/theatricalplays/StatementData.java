@@ -12,6 +12,22 @@ public final class StatementData {
         this.plays = plays;
     }
 
+    static int totalAmountFor(StatementData statementData) {
+        var totalAmount = 0;
+        for (var perf : statementData.getPerformances()) {
+            totalAmount += statementData.getPerformanceData(perf).amount();
+        }
+        return totalAmount;
+    }
+
+    static int totalVolumeCredits(StatementData statementData) {
+        var volumeCredits = 0;
+        for (var perf : statementData.getPerformances()) {
+            volumeCredits += statementData.getPerformanceData(perf).volumeCredits();
+        }
+        return volumeCredits;
+    }
+
     Play playForPerformance(Performance perf) {
         return plays.get(perf.playID);
     }
