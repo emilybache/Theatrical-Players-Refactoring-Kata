@@ -1,7 +1,5 @@
 package theatricalplays;
 
-import java.util.Objects;
-
 public final class PerformanceData {
     private final Performance perf;
     private final Play play;
@@ -19,4 +17,11 @@ public final class PerformanceData {
         return play;
     }
 
+    public Play getPlay() {
+        return play;
+    }
+
+    public Performance getPerf() {
+        return perf;
+    }
 }

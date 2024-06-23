@@ -14,7 +14,7 @@ public class StatementPrinter {
         for (var perf : statementData.getPerformances()) {
             // print line for this order
             result += String.format("  %s: %s (%s seats)\n", playForPerformance(statementData.getPlays(), perf).name,
-                    formatAsUSD(amountFor(perf, playForPerformance(statementData.getPlays(), perf))),
+                    formatAsUSD(amountFor(new PerformanceData(perf, playForPerformance(statementData.getPlays(), perf)))),
                     perf.audience);
         }
 
@@ -26,7 +26,7 @@ public class StatementPrinter {
     private static int totalAmountFor(StatementData statementData) {
         var totalAmount = 0;
         for (var perf : statementData.getPerformances()) {
-            totalAmount += amountFor(perf, playForPerformance(statementData.getPlays(), perf));
+            totalAmount += amountFor(new PerformanceData(perf, playForPerformance(statementData.getPlays(), perf)));
         }
         return totalAmount;
     }
@@ -57,21 +57,21 @@ public class StatementPrinter {
         return result;
     }
 
-    private static int amountFor(Performance perf, Play play) {
+    private static int amountFor(PerformanceData performanceData) {
         int result;
-        switch (play.type) {
+        switch (performanceData.getPlay().type) {
             case "tragedy":
                 result = 40000;
-                if (perf.audience > 30) {
-                    result += 1000 * (perf.audience - 30);
+                if (performanceData.getPerf().audience > 30) {
+                    result += 1000 * (performanceData.getPerf().audience - 30);
                 }
                 break;
             case "comedy":
                 result = 30000;
-                if (perf.audience > 20) {
-                    result += 10000 + 500 * (perf.audience - 20);
+                if (performanceData.getPerf().audience > 20) {
+                    result += 10000 + 500 * (performanceData.getPerf().audience - 20);
                 }
-                result += 300 * perf.audience;
+                result += 300 * performanceData.getPerf().audience;
                 break;
             default:
                 throw new Error("unknown type: ${play.type}");
