@@ -13,8 +13,8 @@ public class StatementPrinter {
 
         for (var perf : statementData.getPerformances()) {
             // print line for this order
-            result += String.format("  %s: %s (%s seats)\n", playForPerformance(plays, perf).name,
-                    formatAsUSD(amountFor(perf, playForPerformance(plays, perf))),
+            result += String.format("  %s: %s (%s seats)\n", playForPerformance(statementData.getPlays(), perf).name,
+                    formatAsUSD(amountFor(perf, playForPerformance(statementData.getPlays(), perf))),
                     perf.audience);
         }
 
