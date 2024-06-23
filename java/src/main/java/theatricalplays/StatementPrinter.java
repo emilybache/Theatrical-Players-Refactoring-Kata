@@ -51,9 +51,9 @@ public class StatementPrinter {
     private static int volumeCreditsFor(PerformanceData performanceData) {
         var result = 0;
         // add volume credits
-        result += Math.max(performanceData.perf().audience - 30, 0);
+        result += Math.max(performanceData.getPerf().audience - 30, 0);
         // add extra credit for every ten comedy attendees
-        if ("comedy".equals(performanceData.play().type)) result += Math.floor(performanceData.perf().audience / 5);
+        if ("comedy".equals(performanceData.getPlay().type)) result += Math.floor(performanceData.getPerf().audience / 5);
         return result;
     }
 
