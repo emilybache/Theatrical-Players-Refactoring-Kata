@@ -12,7 +12,7 @@ class TestStatement < Minitest::Test
     " As You Like It: $580.00 (35 seats)\n" \
     " Othello: $500.00 (40 seats)\n" \
     "Amount owed is $1730.00\n" \
-    "You earned 40 credits\n"
+    "You earned 47 credits\n"
 
     assert_equal expected_statement, statement(invoice, plays)
   end

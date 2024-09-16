@@ -30,7 +30,7 @@ def statement(invoice, plays)
     # add volume credits
     volume_credits += [perf['audience'] - 30, 0].max
     # add extra credit for every ten comedy attendees
-    if play[:type] == 'comedy'
+    if play['type'] == 'comedy'
       volume_credits += (perf['audience'] / 5).floor
     end
 
