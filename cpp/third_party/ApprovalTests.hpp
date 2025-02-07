@@ -1,7 +1,7 @@
-// ApprovalTests.cpp version v.10.12.2
+// ApprovalTests.cpp version v.10.13.0
 // More information at: https://github.com/approvals/ApprovalTests.cpp
 //
-// Copyright (c) 2022 Llewellyn Falco and Clare Macrae. All rights reserved.
+// Copyright (c) 2024 Llewellyn Falco and Clare Macrae. All rights reserved.
 //
 // Distributed under the Apache 2.0 License
 // See https://opensource.org/licenses/Apache-2.0
@@ -26,9 +26,9 @@
 // ******************** From: ApprovalTestsVersion.h
 
 #define APPROVAL_TESTS_VERSION_MAJOR 10
-#define APPROVAL_TESTS_VERSION_MINOR 12
-#define APPROVAL_TESTS_VERSION_PATCH 2
-#define APPROVAL_TESTS_VERSION_STR "10.12.2"
+#define APPROVAL_TESTS_VERSION_MINOR 13
+#define APPROVAL_TESTS_VERSION_PATCH 0
+#define APPROVAL_TESTS_VERSION_STR "10.13.0"
 
 #define APPROVAL_TESTS_VERSION                                                           \
     (APPROVAL_TESTS_VERSION_MAJOR * 10000 + APPROVAL_TESTS_VERSION_MINOR * 100 +         \
@@ -127,6 +127,11 @@ namespace ApprovalTests
 {
     namespace DiffPrograms
     {
+        namespace CrossPlatform
+        {
+            DiffInfo VS_CODE();
+        }
+
         namespace Mac
         {
             DiffInfo DIFF_MERGE();
@@ -381,25 +386,6 @@ namespace ApprovalTests
 #if (defined(__MINGW32__) || defined(__MINGW64__))
 #define APPROVAL_TESTS_MINGW
 #endif
-
-#ifdef APPROVAL_TESTS_MINGW
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-
-#include <sec_api/stdlib_s.h> /* errno_t, size_t */
-
-    errno_t getenv_s(size_t* ret_required_buf_size,
-                     char* buf,
-                     size_t buf_size_in_bytes,
-                     const char* name);
-
-#ifdef __cplusplus
-}
-#endif
-
-#endif // APPROVAL_TESTS_MINGW
 
 // ******************** From: StringMaker.h
 
@@ -2315,6 +2301,55 @@ struct Catch2TestCommitRevert : Catch::TestEventListenerBase
 CATCH_REGISTER_LISTENER(Catch2TestCommitRevert)
 #endif
 
+// ******************** From: Catch2v3Approvals.h
+
+
+#ifdef APPROVALS_CATCH2_V3
+#define APPROVAL_TESTS_INCLUDE_CPPS
+
+#include <catch2/reporters/catch_reporter_event_listener.hpp>
+#include <catch2/catch_test_macros.hpp>
+#include <catch2/reporters/catch_reporter_registrars.hpp>
+#include <catch2/catch_test_case_info.hpp>
+
+//namespace ApprovalTests {
+struct Catch2ApprovalListener : Catch::EventListenerBase
+{
+    ApprovalTests::TestName currentTest;
+    using EventListenerBase::
+        EventListenerBase; // This using allows us to use all base-class constructors
+    virtual void testCaseStarting(Catch::TestCaseInfo const& testInfo) override
+    {
+
+        currentTest.setFileName(testInfo.lineInfo.file);
+        ApprovalTests::FrameworkIntegrations::setCurrentTest(&currentTest);
+        ApprovalTests::FrameworkIntegrations::setTestPassedNotification(
+            []() { REQUIRE(true); });
+    }
+
+    virtual void testCaseEnded(Catch::TestCaseStats const& /*testCaseStats*/) override
+    {
+        while (!currentTest.sections.empty())
+        {
+            currentTest.sections.pop_back();
+        }
+    }
+
+    virtual void sectionStarting(Catch::SectionInfo const& sectionInfo) override
+    {
+        currentTest.sections.push_back(sectionInfo.name);
+    }
+
+    virtual void sectionEnded(Catch::SectionStats const& /*sectionStats*/) override
+    {
+        currentTest.sections.pop_back();
+    }
+};
+//}
+CATCH_REGISTER_LISTENER(Catch2ApprovalListener)
+
+#endif
+
 // ******************** From: CppUTestApprovals.h
 
 
@@ -2909,6 +2944,27 @@ namespace ApprovalTests
 
         bool report(std::string received, std::string approved) const override;
     };
+}
+
+// ******************** From: CrossPlatformReporters.h
+
+
+namespace ApprovalTests
+{
+    namespace CrossPlatform
+    {
+        class VisualStudioCodeReporter : public GenericDiffReporter
+        {
+        public:
+            VisualStudioCodeReporter();
+        };
+
+        class CrossPlatformDiffReporter : public FirstWorkingReporter
+        {
+        public:
+            CrossPlatformDiffReporter();
+        };
+    }
 }
 
 // ******************** From: CustomReporter.h
@@ -4966,6 +5022,27 @@ namespace ApprovalTests
     }
 }
 
+// ******************** From: CrossPlatformReporters.cpp
+
+
+namespace ApprovalTests
+{
+    namespace CrossPlatform
+    {
+        VisualStudioCodeReporter::VisualStudioCodeReporter()
+            : GenericDiffReporter(DiffPrograms::CrossPlatform::VS_CODE())
+        {
+        }
+
+        CrossPlatformDiffReporter::CrossPlatformDiffReporter()
+            : FirstWorkingReporter({
+                  new VisualStudioCodeReporter(),
+              })
+        {
+        }
+    }
+}
+
 // ******************** From: CustomReporter.cpp
 
 namespace ApprovalTests
@@ -5149,6 +5226,12 @@ namespace ApprovalTests
     namespace DiffPrograms
     {
 
+        namespace CrossPlatform
+        {
+            APPROVAL_TESTS_MACROS_ENTRY(
+                VS_CODE, DiffInfo("code", "-d {Received} {Approved}", Type::TEXT))
+        }
+
         namespace Mac
         {
             APPROVAL_TESTS_MACROS_ENTRY(
@@ -5322,7 +5405,8 @@ namespace ApprovalTests
         : FirstWorkingReporter({new EnvironmentVariableReporter(),
                                 new Mac::MacDiffReporter(),
                                 new Linux::LinuxDiffReporter(),
-                                new Windows::WindowsDiffReporter()})
+                                new Windows::WindowsDiffReporter(),
+                                new CrossPlatform::CrossPlatformDiffReporter()})
     {
     }
 }
@@ -5692,6 +5776,8 @@ namespace ApprovalTests
         APPROVAL_TESTS_REGISTER_REPORTER(Windows::SublimeMergeReporter);
         APPROVAL_TESTS_REGISTER_REPORTER(Windows::KDiff3Reporter);
         APPROVAL_TESTS_REGISTER_REPORTER(Windows::VisualStudioCodeReporter);
+
+        APPROVAL_TESTS_REGISTER_REPORTER(CrossPlatform::VisualStudioCodeReporter);
 
         return map;
     }
