@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 3.4...3.14)
 project(theatrical_players_refactoring_kata
     LANGUAGES CXX
 )
