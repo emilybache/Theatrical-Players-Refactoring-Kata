@@ -1,4 +1,4 @@
-// TODO Include Guard
+#pragma once
 
 #include "json.hpp"
 
