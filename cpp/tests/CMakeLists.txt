@@ -1,15 +1,20 @@
-project(tests)
-
-add_executable(${PROJECT_NAME}
-    ../statement.cpp
-    ../statement.h
+add_executable(tests
     test_statement.cpp
-    main.cpp)
+)
 
 target_include_directories(
-    ${PROJECT_NAME}
+    tests
     PUBLIC
-    ../third_party ..)
+    ../third_party
+    ..
+)
 
-enable_testing()
-add_test(NAME ${PROJECT_NAME}_test COMMAND ${PROJECT_NAME})
+target_link_libraries(tests
+    PRIVATE theatrical_players_lib
+)
+
+add_test(
+    NAME ${PROJECT_NAME}_test
+    COMMAND tests
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
