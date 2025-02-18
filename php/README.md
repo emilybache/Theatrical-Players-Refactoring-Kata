@@ -1,6 +1,6 @@
 # Theatrical Players Refactoring Kata - PHP version
 
-See the [top level readme](../../Theatrical-Players-Refactoring-Kata/README.md) for general information
+See the [top level readme](../README.md) for general information
  about this exercise. This is the PHP version of the Theatrical Players Refactoring Kata. Download the PDF of the first 
 chapter of ['Refactoring' by Martin Fowler, 2nd Edition](https://www.thoughtworks.com/books/refactoring2) which contains 
 a worked example of this exercise, in javascript.
