@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using ApprovalTests;
-using ApprovalTests.Reporters;
+using System.Threading.Tasks;
+using VerifyXunit;
 using Xunit;
 
 namespace TheatricalPlayersRefactoringKata.Tests
@@ -9,8 +9,7 @@ namespace TheatricalPlayersRefactoringKata.Tests
     public class StatementPrinterTests
     {
         [Fact]
-        [UseReporter(typeof(DiffReporter))]
-        public void test_statement_example()
+        public Task test_statement_example()
         {
             var plays = new Dictionary<string, Play>();
             plays.Add("hamlet", new Play("Hamlet", "tragedy"));
@@ -24,7 +23,7 @@ namespace TheatricalPlayersRefactoringKata.Tests
             StatementPrinter statementPrinter = new StatementPrinter();
             var result = statementPrinter.Print(invoice, plays);
 
-            Approvals.Verify(result);
+            return Verifier.Verify(result);
         }
         [Fact]
         public void test_statement_with_new_play_types()
