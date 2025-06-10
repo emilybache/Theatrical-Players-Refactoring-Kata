@@ -21,7 +21,7 @@ class TestStatement < Minitest::Test
     invoice = load_json_fixture('invoice_new_plays.json')
     plays = load_json_fixture('new_plays.json')
 
-    error = assert_raises(Exception) do
+    error = assert_raises(StandardError) do
       statement(invoice, plays)
     end
 
