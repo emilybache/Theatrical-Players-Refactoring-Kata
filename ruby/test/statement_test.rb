@@ -14,7 +14,7 @@ class TestStatement < Minitest::Test
     "Amount owed is $1730.00\n" \
     "You earned 47 credits\n"
 
-    assert_equal expected_statement, statement(invoice, plays)
+    assert_equal expected_statement, TheatricalPlays::StatementPrinter.new.print(invoice, plays)
   end
 
   def test_statement_with_new_types
@@ -22,7 +22,7 @@ class TestStatement < Minitest::Test
     plays = load_json_fixture('new_plays.json')
 
     error = assert_raises(Exception) do
-      statement(invoice, plays)
+      TheatricalPlays::StatementPrinter.new.print(invoice, plays)
     end
 
     assert_equal 'unknown type: history', error.message
