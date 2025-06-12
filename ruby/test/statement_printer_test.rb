@@ -1,8 +1,8 @@
 require "minitest/autorun"
-require 'json'
-require_relative '../lib/theatrical_plays/statement.rb';
+require "json"
+require_relative "../lib/theatrical_plays/statement_printer"
 
-class TestStatement < Minitest::Test
+class TestStatementPrinter < Minitest::Test
   def test_statement_with_known_types
     invoice = load_json_fixture('invoice.json')
     plays = load_json_fixture('plays.json')
