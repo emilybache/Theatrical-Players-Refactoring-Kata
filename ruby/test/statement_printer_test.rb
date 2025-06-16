@@ -1,8 +1,8 @@
 require "minitest/autorun"
-require 'json'
-require_relative '../lib/theatrical_plays/statement.rb';
+require "json"
+require_relative "../lib/theatrical_plays/statement_printer"
 
-class TestStatement < Minitest::Test
+class TestStatementPrinter < Minitest::Test
   def test_statement_with_known_types
     invoice = load_json_fixture('invoice.json')
     plays = load_json_fixture('plays.json')
@@ -14,15 +14,15 @@ class TestStatement < Minitest::Test
     "Amount owed is $1730.00\n" \
     "You earned 47 credits\n"
 
-    assert_equal expected_statement, statement(invoice, plays)
+    assert_equal expected_statement, TheatricalPlays::StatementPrinter.new.print(invoice, plays)
   end
 
   def test_statement_with_new_types
     invoice = load_json_fixture('invoice_new_plays.json')
     plays = load_json_fixture('new_plays.json')
 
-    error = assert_raises(Exception) do
-      statement(invoice, plays)
+    error = assert_raises(StandardError) do
+      TheatricalPlays::StatementPrinter.new.print(invoice, plays)
     end
 
     assert_equal 'unknown type: history', error.message
