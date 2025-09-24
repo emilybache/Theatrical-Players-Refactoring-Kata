@@ -1,0 +1,9 @@
+name: theatrical_plays
+description: Theatrical Players Refactoring Kata
+
+environment:
+  sdk: '^3.9.0'
+  
+dependencies:
+  test: ^1.16.0
+  intl: ^0.17.0

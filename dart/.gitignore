@@ -1,0 +1,27 @@
+# Dart build and tool directories
+.dart_tool/
+.buildlog/
+.packages
+.pub/
+build/
+
+# IDE files
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+
+# Coverage files
+coverage/
+coverage.lcov
+
+# Logs
+*.log
+
+# OS-specific junk
+.DS_Store
+Thumbs.db
+
+# Lock file (only ignore for libraries, not apps!)
+#pubspec.lock
