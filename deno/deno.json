@@ -1,0 +1,13 @@
+{
+  "tasks": {
+    "dev": "deno run --watch --allow-net main.ts",
+    "verify": "deno lint && deno test --allow-read --coverage && deno coverage --threshold=80"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1",
+    "@std/expect": "jsr:@std/expect@^1.0.20",
+    "tar": "npm:tar@^7.5.22",
+    "yaml": "npm:yaml@^2.9.0",
+    "zod": "npm:zod@^4.4.3"
+  }
+}
